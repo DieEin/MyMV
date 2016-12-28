@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyMV</string>
+    <string name="add_new">add new</string>
 </resources>

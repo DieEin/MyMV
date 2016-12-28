@@ -10,11 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.elsyscoursework.mymv.MainActivity">
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicle_list" />
+
     <Button
         android:layout_width="@dimen/add_vehicle_button_dimensions"
         android:layout_height="@dimen/add_vehicle_button_dimensions"
         android:gravity="center_vertical|center_horizontal"
         android:id="@+id/add_vehicle_button"
+        android:layout_below="@+id/vehicle_list"
         android:background="@drawable/round_button"
         android:text="@string/add_new"/>
 

@@ -61,6 +61,25 @@ public class HelperSQL extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList getVehicleForList() {
+        ArrayList vehicle = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + VEHICLE_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            do {
+                vehicle.add(cursor.getString(cursor.getColumnIndex(MANUFACTURER)) + " " + cursor.getString(cursor.getColumnIndex(MODEL)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return vehicle;
+    }
+
     public ArrayList getVehicle() {
         ArrayList vehicle = new ArrayList<String>();
         String selectQuery = "SELECT  * FROM " + VEHICLE_TABLE;
@@ -73,7 +92,7 @@ public class HelperSQL extends SQLiteOpenHelper {
             do {
                 vehicle.add(cursor.getString(cursor.getColumnIndex(TYPE)));
                 vehicle.add(cursor.getString(cursor.getColumnIndex(MANUFACTURER)));
-                vehicle.add(cursor.getString((cursor.getColumnIndex(MODEL))));
+                vehicle.add(cursor.getString(cursor.getColumnIndex(MODEL)));
             } while (cursor.moveToNext());
         }
         cursor.close();

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private HelperSQL db;
     private AlertDialog.Builder dialog;
+    private final int TEXT_SIZE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         // get db information for every vehicle
         db = new HelperSQL(getApplicationContext());
-        ArrayList<String> vehicle = db.getVehicle();
+        ArrayList<String> vehicle = db.getVehicleForList();
         String[] vehicleInformation = new String[vehicle.size()];
         int counter = 0;
         for(String str : vehicle) {
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 // set type text view
                 TextView setTypeText = new TextView(MainActivity.this);
                 setTypeText.setText("Set vehicle type:");
-                setTypeText.setTextSize(20);
+                setTypeText.setTextSize(TEXT_SIZE);
 
                 // set type dropdown
                 final Spinner setType = new Spinner(MainActivity.this);
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 // set manufacturer text view
                 TextView setManufacturerText = new TextView(MainActivity.this);
                 setManufacturerText.setText("Set vehicle manufacturer:");
+                setManufacturerText.setTextSize(TEXT_SIZE);
 
                 // set manufacturer
                 final EditText setManufacturer = new EditText(MainActivity.this);
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 // set model text view
                 TextView setModelText = new TextView(MainActivity.this);
                 setModelText.setText("Set vehicle model:");
+                setModelText.setTextSize(TEXT_SIZE);
 
                 // set model
                 final EditText setModel = new EditText(MainActivity.this);

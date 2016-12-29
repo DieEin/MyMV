@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MyMV</string>
     <string name="add_new">add new</string>
+    <string name="manage_vehicle_type_text">Type:</string>
+    <string name="manage_vehicle_manufacturer_text">Manufacturer:</string>
+    <string name="manage_vehicle_model_text">Model:</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.elsyscoursework.mymv;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         // get db information for every vehicle
         db = new HelperSQL(getApplicationContext());
-        ArrayList<String> vehicle = db.getVehicleForList();
+        final ArrayList<String> vehicle = db.getVehicleForList();
         String[] vehicleInformation = new String[vehicle.size()];
         int counter = 0;
         for(String str : vehicle) {
@@ -41,6 +43,27 @@ public class MainActivity extends AppCompatActivity {
         ListAdapter vehicleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, vehicleInformation);
         final ListView vehicleListView = (ListView) findViewById(R.id.vehicle_list);
         vehicleListView.setAdapter(vehicleAdapter);
+
+        vehicleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // get the item at the position which was selected (clicked)
+                Object itemAtPosition = vehicleListView.getItemAtPosition(position);
+                // represent it as string
+                String itemAtPositionAsString = itemAtPosition.toString();
+                // remove all non digit characters
+                String idItemAtPositionAsString = itemAtPositionAsString.replaceAll("\\D+","");
+                // represent it as integer
+                int idItemAtPosition = Integer.parseInt(idItemAtPositionAsString);
+
+                final String PASSED_VARIABLE_NAME = "idItemAtPosition";
+
+                // intent to go to ManageVehicle screen
+                Intent goToManageVehicle = new Intent(MainActivity.this, ManageVehicle.class);
+                goToManageVehicle.putExtra(PASSED_VARIABLE_NAME, idItemAtPosition);
+                startActivity(goToManageVehicle);
+            }
+        });
 
         // add_new button and what happens when it gets clicked
         Button add_vehicle_button = (Button) findViewById(R.id.add_vehicle_button);

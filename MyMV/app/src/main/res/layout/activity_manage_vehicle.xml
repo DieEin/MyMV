@@ -10,4 +10,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.elsyscoursework.mymv.ManageVehicle">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manage_vehicle_type_text"
+        android:id="@+id/manage_vehicle_type"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_vehicle_type_textview"
+        android:layout_toRightOf="@+id/manage_vehicle_type"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manage_vehicle_manufacturer_text"
+        android:id="@+id/manage_vehicle_manufacturer"
+        android:layout_below="@+id/manage_vehicle_type"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_vehicle_manufacturer_textview"
+        android:layout_below="@+id/manage_vehicle_type"
+        android:layout_toRightOf="@+id/manage_vehicle_manufacturer"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manage_vehicle_model_text"
+        android:id="@+id/manage_vehicle_model"
+        android:layout_below="@+id/manage_vehicle_manufacturer"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_vehicle_model_textview"
+        android:layout_below="@+id/manage_vehicle_manufacturer"
+        android:layout_toRightOf="@+id/manage_vehicle_model" />
+
 </RelativeLayout>

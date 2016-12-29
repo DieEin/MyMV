@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Tomi on 28.12.2016 г..
@@ -71,8 +72,27 @@ public class HelperSQL extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             do {
-                vehicle.add(cursor.getString(cursor.getColumnIndex(MANUFACTURER)) + " " + cursor.getString(cursor.getColumnIndex(MODEL)));
+                vehicle.add(cursor.getString(cursor.getColumnIndex(ID)) + "." + cursor.getString(cursor.getColumnIndex(MANUFACTURER)) + " " + cursor.getString(cursor.getColumnIndex(MODEL)));
             } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return vehicle;
+    }
+
+    public HashMap<String, String> getVehicleFromId(int id) {
+        HashMap<String, String> vehicle = new HashMap<>();
+        String selectQuery = "SELECT * FROM " + VEHICLE_TABLE + " WHERE id = " + String.valueOf(id);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            vehicle.put(TYPE, cursor.getString(cursor.getColumnIndex(TYPE)));
+            vehicle.put(MANUFACTURER, cursor.getString(cursor.getColumnIndex(MANUFACTURER)));
+            vehicle.put(MODEL , cursor.getString(cursor.getColumnIndex(MODEL)));
         }
         cursor.close();
         db.close();

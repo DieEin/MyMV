@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         // display vehicles as list view
         ListAdapter vehicleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, vehicleInformation);
-        final ListView testListView = (ListView) findViewById(R.id.vehicle_list);
-        testListView.setAdapter(vehicleAdapter);
+        final ListView vehicleListView = (ListView) findViewById(R.id.vehicle_list);
+        vehicleListView.setAdapter(vehicleAdapter);
 
         // add_new button and what happens when it gets clicked
         Button add_vehicle_button = (Button) findViewById(R.id.add_vehicle_button);

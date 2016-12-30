@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,12 +55,17 @@ public class ManageVehicle extends AppCompatActivity {
         manufacturerTextView.setText(manufacturer);
         modelTextView.setText(model);
 
+        TextView testt = (TextView) findViewById(R.id.testt);
+        testt.setText(db.showTest(idItemAtPosition));
+
         // the update button and what happens when it gets clicked
         Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.update(idItemAtPosition);
+                EditText testttt = (EditText) findViewById(R.id.testttt);
+
+                db.update(testttt.getText().toString(), idItemAtPosition);
                 finish();
                 startActivity(getIntent());
             }

@@ -54,4 +54,16 @@
         android:id="@+id/manage_vehicle_update_button"
         android:text="@string/manage_vehicle_update_button_text"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manage_vehicle_update_button"
+        android:id="@+id/testt" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/testt"
+        android:id="@+id/testttt"/>
+
 </RelativeLayout>

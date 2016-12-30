@@ -36,6 +36,15 @@ public class HelperSQL extends SQLiteOpenHelper {
     final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + VEHICLE_TABLE;
 
+    final String TEST_ID = "test_id";
+    final String TEST_TABLE = "test";
+
+    final String SQL_CREATE_TEST =
+            "CREATE TABLE " + TEST_TABLE + " (id INTEGER PRIMARY KEY, varr TEXT)";
+
+    final String SQL_CREATE_MANAGE_TABLES =
+            "CREATE TABLE manage (id INTEGER PRIMARY KEY, " + TEST_ID + " INTEGER, vehicle_id INTEGER, FOREIGN KEY ("+TEST_ID+") REFERENCES "+TEST_TABLE+"(id), FOREIGN KEY (vehicle_id) REFERENCES vehicle(id) )";
+
     public HelperSQL(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -43,11 +52,15 @@ public class HelperSQL extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_TEST);
+        db.execSQL(SQL_CREATE_MANAGE_TABLES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL("DROP TABLE IF EXISTS test");
+        db.execSQL("DROP TABLE IF EXISTS manage");
         onCreate(db);
     }
 
@@ -60,6 +73,18 @@ public class HelperSQL extends SQLiteOpenHelper {
         values.put(MODEL, model);
 
         long newVehicleRowId = db.insert(VEHICLE_TABLE, null, values);
+
+        ContentValues test = new ContentValues();
+        test.put("varr", "");
+
+        long testt = db.insert(TEST_TABLE, null, test);
+
+        ContentValues testing = new ContentValues();
+        testing.put(TEST_ID, newVehicleRowId);
+        testing.put("vehicle_id", newVehicleRowId);
+
+        long testtt = db.insert("manage", null, testing);
+
         db.close();
     }
 
@@ -122,10 +147,24 @@ public class HelperSQL extends SQLiteOpenHelper {
         return vehicle;
     }
 
-    public void update(int id) {
+    public void update(String tst, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE vehicle SET model='aaaaaaa' WHERE id=" + String.valueOf(id));
+        db.execSQL("UPDATE test SET varr='" + tst + "' WHERE id=" + String.valueOf(id));
         db.close();
+    }
+
+    public String showTest(int id) {
+        String test = new String();
+        String selectQ = "SELECT * FROM test JOIN manage ON test.id=manage.test_id JOIN vehicle ON manage.vehicle_id=" + String.valueOf(id);//WHERE id=" + String.valueOf(id);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQ, null);
+        cursor.moveToFirst();
+        if(cursor.getCount() > 0) {
+            test = cursor.getString(cursor.getColumnIndex("varr"));
+        }
+
+        return test;
     }
 
 }

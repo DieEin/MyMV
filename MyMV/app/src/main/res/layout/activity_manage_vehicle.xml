@@ -47,4 +47,11 @@
         android:layout_below="@+id/manage_vehicle_manufacturer"
         android:layout_toRightOf="@+id/manage_vehicle_model" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manage_vehicle_model"
+        android:id="@+id/manage_vehicle_update_button"
+        android:text="@string/manage_vehicle_update_button_text"/>
+
 </RelativeLayout>

@@ -24,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder dialog;
     private final int TEXT_SIZE = 20;
 
+    // restart activity in order to update on-screen information after back button was clicked
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,5 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 dialogShow.show();
             }
         });
+
+
     }
 }

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 /**
  * Created by Tomi on 28.12.2016 г..
@@ -119,6 +120,12 @@ public class HelperSQL extends SQLiteOpenHelper {
         db.close();
 
         return vehicle;
+    }
+
+    public void update(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE vehicle SET model='aaaaaaa' WHERE id=" + String.valueOf(id));
+        db.close();
     }
 
 }

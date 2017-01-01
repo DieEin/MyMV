@@ -67,14 +67,17 @@ public class ManageVehicle extends AppCompatActivity {
         String owner = vehicleHistory.get("owner");
         String productionYear = vehicleHistory.get("production_year");
         String previousOwners = vehicleHistory.get("previous_owners");
+        String kilometerage = vehicleHistory.get("kilometerage");
 
         TextView ownerTextView = (TextView) findViewById(R.id.vehicle_owner_textview);
         TextView productionYearTextView = (TextView) findViewById(R.id.vehicle_production_year_textview);
         TextView previousOwnersTextView = (TextView) findViewById(R.id.vehicle_previous_owners_textview);
+        TextView kilometerageTextView = (TextView) findViewById(R.id.vehicle_kilometerage_textview);
 
         ownerTextView.setText(owner);
         productionYearTextView.setText(productionYear);
         previousOwnersTextView.setText(previousOwners);
+        kilometerageTextView.setText(kilometerage);
 
         // the update button and what happens when it gets clicked
         Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);

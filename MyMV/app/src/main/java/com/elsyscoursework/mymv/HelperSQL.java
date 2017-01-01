@@ -31,6 +31,7 @@ public class HelperSQL extends SQLiteOpenHelper {
     final String OWNER = "owner";
     final String PRODUCTION_YEAR = "production_year";
     final String PREVIOUS_OWNERS = "previous_owners";
+    final String KILOMETERAGE = "kilometerage";
 
     final String SQL_CREATE_VEHICLE_TABLE =
             CREATE_TABLE + " " + VEHICLE_TABLE + " (" +
@@ -47,7 +48,8 @@ public class HelperSQL extends SQLiteOpenHelper {
             ID + " INTEGER PRIMARY KEY," +
             OWNER + " TEXT," +
             PRODUCTION_YEAR + " INTEGER," +
-            PREVIOUS_OWNERS + " INTEGER)";
+            PREVIOUS_OWNERS + " INTEGER," +
+            KILOMETERAGE + " INTEGER)";
 
     final String SQL_DELETE_HISTORY_TABLE =
             DROP_TABLE + " " + HISTORY_TABLE;
@@ -94,6 +96,7 @@ public class HelperSQL extends SQLiteOpenHelper {
         historyValues.put(OWNER, "");
         historyValues.put(PRODUCTION_YEAR, 0);
         historyValues.put(PREVIOUS_OWNERS, 0);
+        historyValues.put(KILOMETERAGE, 0);
 
         long newHistoryRowId = db.insert(HISTORY_TABLE, null, historyValues);
 
@@ -183,6 +186,7 @@ public class HelperSQL extends SQLiteOpenHelper {
             history.put(OWNER, cursor.getString(cursor.getColumnIndex(OWNER)));
             history.put(PRODUCTION_YEAR, cursor.getString(cursor.getColumnIndex(PRODUCTION_YEAR)));
             history.put(PREVIOUS_OWNERS, cursor.getString(cursor.getColumnIndex(PREVIOUS_OWNERS)));
+            history.put(KILOMETERAGE, cursor.getString((cursor.getColumnIndex(KILOMETERAGE))));
         }
 
         cursor.close();

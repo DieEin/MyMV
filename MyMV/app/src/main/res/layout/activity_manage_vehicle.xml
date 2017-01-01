@@ -89,17 +89,31 @@
         android:layout_toRightOf="@+id/vehicle_previous_owners"
         android:id="@+id/vehicle_previous_owners_textview"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_previous_owners"
+        android:text="@string/vehicle_kilometerage_text"
+        android:id="@+id/vehicle_kilometerage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_previous_owners"
+        android:layout_toRightOf="@+id/vehicle_kilometerage"
+        android:id="@+id/vehicle_kilometerage_textview"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vehicle_previous_owners"
+        android:layout_below="@id/vehicle_kilometerage"
         android:id="@+id/manage_vehicle_update_button"
         android:text="@string/manage_vehicle_update_button_text"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_previous_owners"
+        android:layout_below="@+id/vehicle_kilometerage"
         android:layout_toRightOf="@+id/manage_vehicle_update_button"
         android:text="@string/manage_vehicle_delete_button_text"
         android:id="@+id/manage_vehicle_delete_button"/>

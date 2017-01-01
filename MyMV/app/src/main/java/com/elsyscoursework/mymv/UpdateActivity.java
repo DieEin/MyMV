@@ -56,14 +56,17 @@ public class UpdateActivity extends AppCompatActivity {
         String owner = vehicleHistory.get("owner");
         String productionYear = vehicleHistory.get("production_year");
         String previousOwners = vehicleHistory.get("previous_owners");
+        String kilometerage = vehicleHistory.get("kilometerage");
 
         final EditText ownerTextView = (EditText) findViewById(R.id.update_owner_textview);
         final EditText productionYearTextView = (EditText) findViewById(R.id.update_production_year_textview);
         final EditText previousOwnersTextView = (EditText) findViewById(R.id.update_previous_owners_textview);
+        final EditText kilometerageTextView = (EditText) findViewById(R.id.update_kilometerage_textview);
 
         ownerTextView.setText(owner);
         productionYearTextView.setText(productionYear);
         previousOwnersTextView.setText(previousOwners);
+        kilometerageTextView.setText(kilometerage);
 
         Button updateButton = (Button) findViewById(R.id.update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +75,7 @@ public class UpdateActivity extends AppCompatActivity {
                 db.update("history", "owner", ownerTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "production_year", productionYearTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "previous_owners", previousOwnersTextView.getText().toString(), idItemAtPosition);
+                db.update("history", "kilometerage", kilometerageTextView.getText().toString(), idItemAtPosition);
                 finish();
             }
         });

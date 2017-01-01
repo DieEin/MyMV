@@ -3,4 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_vehicle_button_dimensions">50dp</dimen>
+    <dimen name="update_user_input_text_size">13sp</dimen>
 </resources>

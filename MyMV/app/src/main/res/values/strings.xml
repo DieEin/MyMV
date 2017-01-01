@@ -8,4 +8,5 @@
     <string name="vehicle_owner_text">Owner:</string>
     <string name="vehicle_production_year_text">Production year:</string>
     <string name="vehicle_previous_owners_text">Previous owners:</string>
+    <string name="manage_vehicle_delete_button_text">delete</string>
 </resources>

@@ -197,6 +197,13 @@ public class HelperSQL extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void delete(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + VEHICLE_TABLE + " WHERE " + ID + "=" + String.valueOf(id));
+        db.execSQL("DELETE FROM " + HISTORY_TABLE + " WHERE " + ID + "=" + String.valueOf(id));
+        db.close();
+    }
+
     /*
     public void update(String tst, int id) {
         SQLiteDatabase db = this.getWritableDatabase();

@@ -9,19 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ManageVehicle extends AppCompatActivity {
+public class UpdateActivity extends AppCompatActivity {
 
     private HelperSQL db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_vehicle);
+        setContentView(R.layout.activity_update);
 
         // the variable needed in this activity - the vehicle's id
         final String PASSED_VARIABLE_NAME = "idItemAtPosition";
@@ -33,7 +30,7 @@ public class ManageVehicle extends AppCompatActivity {
         final int idItemAtPosition = receivedIntent.getIntExtra(PASSED_VARIABLE_NAME, DEFAULT_PASSED_INT_VALUE);
 
         // show what we received (the id)
-        Toast toast = Toast.makeText(ManageVehicle.this, String.valueOf(idItemAtPosition), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(UpdateActivity.this, String.valueOf(idItemAtPosition), Toast.LENGTH_SHORT);
         toast.show();
 
         // instance of the database
@@ -46,9 +43,9 @@ public class ManageVehicle extends AppCompatActivity {
         String model = vehicle.get("model");
 
         // find the right text views to show/display the information
-        TextView typeTextView = (TextView) findViewById(R.id.manage_vehicle_type_textview);
-        TextView manufacturerTextView = (TextView) findViewById(R.id.manage_vehicle_manufacturer_textview);
-        TextView modelTextView = (TextView) findViewById(R.id.manage_vehicle_model_textview);
+        TextView typeTextView = (TextView) findViewById(R.id.update_type_textview);
+        TextView manufacturerTextView = (TextView) findViewById(R.id.update_manufacturer_textview);
+        TextView modelTextView = (TextView) findViewById(R.id.update_model_textview);
 
         // setting the values to the text views
         typeTextView.setText(type);
@@ -60,30 +57,21 @@ public class ManageVehicle extends AppCompatActivity {
         String productionYear = vehicleHistory.get("production_year");
         String previousOwners = vehicleHistory.get("previous_owners");
 
-        TextView ownerTextView = (TextView) findViewById(R.id.vehicle_owner_textview);
-        TextView productionYearTextView = (TextView) findViewById(R.id.vehicle_production_year_textview);
-        TextView previousOwnersTextView = (TextView) findViewById(R.id.vehicle_previous_owners_textview);
+        final EditText ownerTextView = (EditText) findViewById(R.id.update_owner_textview);
+        final EditText productionYearTextView = (EditText) findViewById(R.id.update_production_year_textview);
+        final EditText previousOwnersTextView = (EditText) findViewById(R.id.update_previous_owners_textview);
 
         ownerTextView.setText(owner);
         productionYearTextView.setText(productionYear);
         previousOwnersTextView.setText(previousOwners);
 
-        // the update button and what happens when it gets clicked
-        Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);
+        Button updateButton = (Button) findViewById(R.id.update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToUpdate = new Intent(ManageVehicle.this, UpdateActivity.class);
-                goToUpdate.putExtra(PASSED_VARIABLE_NAME, idItemAtPosition);
-                startActivity(goToUpdate);
-            }
-        });
-
-        Button deleteButton = (Button) findViewById(R.id.manage_vehicle_delete_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.delete(idItemAtPosition);
+                db.update("history", "owner", ownerTextView.getText().toString(), idItemAtPosition);
+                db.update("history", "production_year", productionYearTextView.getText().toString(), idItemAtPosition);
+                db.update("history", "previous_owners", previousOwnersTextView.getText().toString(), idItemAtPosition);
                 finish();
             }
         });

@@ -1,107 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_manage_vehicle"
+    android:id="@+id/activity_update"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.elsyscoursework.mymv.ManageVehicle">
+    tools:context="com.elsyscoursework.mymv.UpdateActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/manage_vehicle_type_text"
-        android:id="@+id/manage_vehicle_type"/>
+        android:id="@+id/update_type"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/manage_vehicle_type_textview"
-        android:layout_toRightOf="@+id/manage_vehicle_type"/>
+        android:id="@+id/update_type_textview"
+        android:layout_toRightOf="@+id/update_type"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/manage_vehicle_manufacturer_text"
-        android:id="@+id/manage_vehicle_manufacturer"
-        android:layout_below="@+id/manage_vehicle_type"/>
+        android:id="@+id/update_manufacturer"
+        android:layout_below="@+id/update_type"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/manage_vehicle_manufacturer_textview"
-        android:layout_below="@+id/manage_vehicle_type"
-        android:layout_toRightOf="@+id/manage_vehicle_manufacturer"/>
+        android:id="@+id/update_manufacturer_textview"
+        android:layout_below="@+id/update_type"
+        android:layout_toRightOf="@+id/update_manufacturer"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/manage_vehicle_model_text"
-        android:id="@+id/manage_vehicle_model"
-        android:layout_below="@+id/manage_vehicle_manufacturer"/>
+        android:id="@+id/update_model"
+        android:layout_below="@+id/update_manufacturer"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/manage_vehicle_model_textview"
-        android:layout_below="@+id/manage_vehicle_manufacturer"
-        android:layout_toRightOf="@+id/manage_vehicle_model" />
+        android:id="@+id/update_model_textview"
+        android:layout_below="@+id/update_manufacturer"
+        android:layout_toRightOf="@+id/update_model" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/vehicle_owner_text"
-        android:layout_below="@+id/manage_vehicle_model"
-        android:id="@+id/vehicle_owner"/>
+        android:layout_below="@+id/update_model"
+        android:id="@+id/update_owner"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update_model"
+        android:layout_toRightOf="@+id/update_owner"
+        android:id="@+id/update_owner_textview"
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manage_vehicle_model"
-        android:layout_toRightOf="@+id/vehicle_owner"
-        android:id="@+id/vehicle_owner_textview"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_owner"
+        android:layout_below="@+id/update_owner"
         android:text="@string/vehicle_production_year_text"
-        android:id="@+id/vehicle_production_year"/>
+        android:id="@+id/update_production_year"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update_owner"
+        android:layout_toRightOf="@+id/update_production_year"
+        android:id="@+id/update_production_year_textview"
+        android:inputType="number"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_owner"
-        android:layout_toRightOf="@+id/vehicle_production_year"
-        android:id="@+id/vehicle_production_year_textview"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_production_year"
+        android:layout_below="@+id/update_production_year"
         android:text="@string/vehicle_previous_owners_text"
-        android:id="@+id/vehicle_previous_owners"/>
+        android:id="@+id/update_previous_owners"/>
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_production_year"
-        android:layout_toRightOf="@+id/vehicle_previous_owners"
-        android:id="@+id/vehicle_previous_owners_textview"/>
+        android:layout_below="@+id/update_production_year"
+        android:layout_toRightOf="@+id/update_previous_owners"
+        android:id="@+id/update_previous_owners_textview"
+        android:inputType="number"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vehicle_previous_owners"
-        android:id="@+id/manage_vehicle_update_button"
+        android:layout_below="@id/update_previous_owners"
+        android:id="@+id/update_button"
         android:text="@string/manage_vehicle_update_button_text"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_previous_owners"
-        android:layout_toRightOf="@+id/manage_vehicle_update_button"
-        android:text="@string/manage_vehicle_delete_button_text"
-        android:id="@+id/manage_vehicle_delete_button"/>
 
 </RelativeLayout>

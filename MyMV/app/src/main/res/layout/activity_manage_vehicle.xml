@@ -47,23 +47,53 @@
         android:layout_below="@+id/manage_vehicle_manufacturer"
         android:layout_toRightOf="@+id/manage_vehicle_model" />
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vehicle_owner_text"
+        android:layout_below="@+id/manage_vehicle_model"
+        android:id="@+id/vehicle_owner"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/manage_vehicle_model"
-        android:id="@+id/manage_vehicle_update_button"
-        android:text="@string/manage_vehicle_update_button_text"/>
+        android:layout_toRightOf="@+id/vehicle_owner"
+        android:id="@+id/vehicle_owner_textview"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manage_vehicle_update_button"
-        android:id="@+id/testt" />
+        android:layout_below="@+id/vehicle_owner"
+        android:text="@string/vehicle_production_year_text"
+        android:id="@+id/vehicle_production_year"/>
 
-    <EditText
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/testt"
-        android:id="@+id/testttt"/>
+        android:layout_below="@+id/vehicle_owner"
+        android:layout_toRightOf="@+id/vehicle_production_year"
+        android:id="@+id/vehicle_production_year_textview"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_production_year"
+        android:text="@string/vehicle_previous_owners_text"
+        android:id="@+id/vehicle_previous_owners"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_production_year"
+        android:layout_toRightOf="@+id/vehicle_previous_owners"
+        android:id="@+id/vehicle_previous_owners_textview"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vehicle_previous_owners"
+        android:id="@+id/manage_vehicle_update_button"
+        android:text="@string/manage_vehicle_update_button_text"/>
 
 </RelativeLayout>

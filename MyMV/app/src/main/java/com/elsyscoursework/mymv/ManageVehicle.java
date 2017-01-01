@@ -55,17 +55,27 @@ public class ManageVehicle extends AppCompatActivity {
         manufacturerTextView.setText(manufacturer);
         modelTextView.setText(model);
 
-        TextView testt = (TextView) findViewById(R.id.testt);
-        testt.setText(db.showTest(idItemAtPosition));
+        HashMap<String, String> vehicleHistory = db.getVehicleHistoryFromId(idItemAtPosition);
+        String owner = vehicleHistory.get("owner");
+        String productionYear = vehicleHistory.get("production_year");
+        String previousOwners = vehicleHistory.get("previous_owners");
+
+        TextView ownerTextView = (TextView) findViewById(R.id.vehicle_owner_textview);
+        TextView productionYearTextView = (TextView) findViewById(R.id.vehicle_production_year_textview);
+        TextView previousOwnersTextView = (TextView) findViewById(R.id.vehicle_previous_owners_textview);
+
+        ownerTextView.setText(owner);
+        productionYearTextView.setText(productionYear);
+        previousOwnersTextView.setText(previousOwners);
 
         // the update button and what happens when it gets clicked
         Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText testttt = (EditText) findViewById(R.id.testttt);
-
-                db.update(testttt.getText().toString(), idItemAtPosition);
+                db.update("history", "owner", "hehe", idItemAtPosition);
+                db.update("history", "production_year", "2011", idItemAtPosition);
+                db.update("history", "previous_owners", "1", idItemAtPosition);
                 finish();
                 startActivity(getIntent());
             }

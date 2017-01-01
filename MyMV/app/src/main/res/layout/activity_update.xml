@@ -60,7 +60,8 @@
         android:layout_below="@+id/update_model"
         android:layout_toRightOf="@+id/update_owner"
         android:id="@+id/update_owner_textview"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_above="@+id/update_production_year" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,7 +76,8 @@
         android:layout_below="@+id/update_owner"
         android:layout_toRightOf="@+id/update_production_year"
         android:id="@+id/update_production_year_textview"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:layout_above="@+id/update_previous_owners"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -90,7 +92,8 @@
         android:layout_below="@+id/update_production_year"
         android:layout_toRightOf="@+id/update_previous_owners"
         android:id="@+id/update_previous_owners_textview"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:layout_above="@+id/update_button"/>
 
     <Button
         android:layout_width="wrap_content"

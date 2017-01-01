@@ -18,6 +18,14 @@ public class ManageVehicle extends AppCompatActivity {
 
     private HelperSQL db;
 
+    // restart activity in order to update on-screen information after back button was clicked
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

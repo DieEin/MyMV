@@ -103,17 +103,45 @@
         android:layout_toRightOf="@+id/vehicle_kilometerage"
         android:id="@+id/vehicle_kilometerage_textview"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_kilometerage"
+        android:text="@string/vehicle_last_oil_change_text"
+        android:id="@+id/vehicle_last_oil_change"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_kilometerage"
+        android:layout_toRightOf="@+id/vehicle_last_oil_change"
+        android:id="@+id/vehicle_last_oil_change_textview"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_last_oil_change"
+        android:text="@string/vehicle_next_oil_change_text"
+        android:id="@+id/vehicle_next_oil_change"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicle_last_oil_change"
+        android:layout_toRightOf="@+id/vehicle_next_oil_change"
+        android:id="@+id/vehicle_next_oil_change_textview"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/vehicle_kilometerage"
+        android:layout_below="@id/vehicle_next_oil_change"
         android:id="@+id/manage_vehicle_update_button"
         android:text="@string/manage_vehicle_update_button_text"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/vehicle_kilometerage"
+        android:layout_below="@+id/vehicle_next_oil_change"
         android:layout_toRightOf="@+id/manage_vehicle_update_button"
         android:text="@string/manage_vehicle_delete_button_text"
         android:id="@+id/manage_vehicle_delete_button"/>

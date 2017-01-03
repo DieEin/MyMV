@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -68,6 +69,22 @@ public class UpdateActivity extends AppCompatActivity {
         previousOwnersTextView.setText(previousOwners);
         kilometerageTextView.setText(kilometerage);
 
+        HashMap<String, String> vehicleOil = db.getVehicleOilFromId(idItemAtPosition);
+        String changedAt = vehicleOil.get("changed_at");
+        String nextChangeAt = vehicleOil.get("next_change_at");
+
+        final EditText changedAtTextView = (EditText) findViewById(R.id.update_last_oil_change_textview);
+
+        changedAtTextView.setText(changedAt);
+
+        int kilometerageAsInteger = Integer.parseInt(kilometerage);
+        int changedAtAsInteger = Integer.parseInt(changedAt);
+        int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
+
+        int distanceWithoutOilChange = kilometerageAsInteger - changedAtAsInteger;
+        nextChangeAtAsInteger = 8000 - distanceWithoutOilChange;
+        final String nextOilChangeAt = String.valueOf(nextChangeAtAsInteger);
+
         Button updateButton = (Button) findViewById(R.id.update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +93,10 @@ public class UpdateActivity extends AppCompatActivity {
                 db.update("history", "production_year", productionYearTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "previous_owners", previousOwnersTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "kilometerage", kilometerageTextView.getText().toString(), idItemAtPosition);
+
+                db.update("oil", "changed_at", changedAtTextView.getText().toString(), idItemAtPosition);
+                db.update("oil", "next_change_at", nextOilChangeAt, idItemAtPosition);
+
                 finish();
             }
         });

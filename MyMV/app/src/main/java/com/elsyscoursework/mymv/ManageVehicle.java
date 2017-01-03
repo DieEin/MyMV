@@ -79,6 +79,24 @@ public class ManageVehicle extends AppCompatActivity {
         previousOwnersTextView.setText(previousOwners);
         kilometerageTextView.setText(kilometerage);
 
+        HashMap<String, String> vehicleOil = db.getVehicleOilFromId(idItemAtPosition);
+        String changedAt = vehicleOil.get("changed_at");
+        String nextChangeAt = vehicleOil.get("next_change_at");
+
+        TextView changedAtTextView = (TextView) findViewById(R.id.vehicle_last_oil_change_textview);
+        TextView nextChangeAtTextView = (TextView) findViewById(R.id.vehicle_next_oil_change_textview);
+
+        int kilometerageAsInteger = Integer.parseInt(kilometerage);
+        int changedAtAsInteger = Integer.parseInt(changedAt);
+        int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
+
+        int distanceWithoutOilChange = kilometerageAsInteger - changedAtAsInteger;
+        nextChangeAtAsInteger = 8000 - distanceWithoutOilChange;
+        nextChangeAt = String.valueOf(nextChangeAtAsInteger);
+
+        changedAtTextView.setText(changedAt);
+        nextChangeAtTextView.setText(nextChangeAt);
+
         // the update button and what happens when it gets clicked
         Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {

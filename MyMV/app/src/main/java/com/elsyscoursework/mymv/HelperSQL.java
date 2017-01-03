@@ -33,6 +33,10 @@ public class HelperSQL extends SQLiteOpenHelper {
     final String PREVIOUS_OWNERS = "previous_owners";
     final String KILOMETERAGE = "kilometerage";
 
+    final String OIL_TABLE = "oil";
+    final String CHANGED_AT = "changed_at";
+    final String NEXT_CHANGE_AT = "next_change_at";
+
     final String SQL_CREATE_VEHICLE_TABLE =
             CREATE_TABLE + " " + VEHICLE_TABLE + " (" +
             ID + " INTEGER PRIMARY KEY," +
@@ -54,6 +58,15 @@ public class HelperSQL extends SQLiteOpenHelper {
     final String SQL_DELETE_HISTORY_TABLE =
             DROP_TABLE + " " + HISTORY_TABLE;
 
+    final String SQL_CREATE_OIL_TABLE =
+            CREATE_TABLE + " " + OIL_TABLE + " (" +
+            ID + " INTEGER PRIMARY KEY," +
+            CHANGED_AT + " INTEGER," +
+            NEXT_CHANGE_AT + " INTEGER)";
+
+    final String SQL_DELETE_OIL_TABLE =
+            DROP_TABLE + " " + OIL_TABLE;
+
     /*
     final String TEST_ID = "test_id";
     final String TEST_TABLE = "test";
@@ -73,12 +86,15 @@ public class HelperSQL extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_VEHICLE_TABLE);
         db.execSQL(SQL_CREATE_HISTORY_TABLE);
+        db.execSQL(SQL_CREATE_OIL_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_VEHICLE_TABLE);
         db.execSQL(SQL_DELETE_HISTORY_TABLE);
+        db.execSQL(SQL_DELETE_OIL_TABLE);
+
         onCreate(db);
     }
 
@@ -99,6 +115,12 @@ public class HelperSQL extends SQLiteOpenHelper {
         historyValues.put(KILOMETERAGE, 0);
 
         long newHistoryRowId = db.insert(HISTORY_TABLE, null, historyValues);
+
+        ContentValues oilValues = new ContentValues();
+        oilValues.put(CHANGED_AT, 0);
+        oilValues.put(NEXT_CHANGE_AT, 8000);
+
+        long newOilRowId = db.insert(OIL_TABLE, null, oilValues);
 
         /*
         ContentValues test = new ContentValues();
@@ -195,6 +217,25 @@ public class HelperSQL extends SQLiteOpenHelper {
         return history;
     }
 
+    public HashMap getVehicleOilFromId(int id) {
+        HashMap<String, String> oil = new HashMap();
+
+        String selectQuery = "SELECT * FROM " + OIL_TABLE + " WHERE id=" + String.valueOf(id);
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            oil.put(CHANGED_AT, cursor.getString(cursor.getColumnIndex(CHANGED_AT)));
+            oil.put(NEXT_CHANGE_AT, cursor.getString(cursor.getColumnIndex(NEXT_CHANGE_AT)));
+        }
+
+        cursor.close();
+        db.close();
+
+        return oil;
+    }
+
     public void update(String table, String field, String value, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE " + table + " SET " + field + "='" + value + "' WHERE id=" + String.valueOf(id));
@@ -205,6 +246,7 @@ public class HelperSQL extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + VEHICLE_TABLE + " WHERE " + ID + "=" + String.valueOf(id));
         db.execSQL("DELETE FROM " + HISTORY_TABLE + " WHERE " + ID + "=" + String.valueOf(id));
+        db.execSQL("DELETE FROM " + OIL_TABLE + " WHERE " + ID + "=" + String.valueOf(id));
         db.close();
     }
 

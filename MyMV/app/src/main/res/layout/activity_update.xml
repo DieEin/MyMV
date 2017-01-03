@@ -117,10 +117,27 @@
         android:layout_alignBaseline="@+id/update_kilometerage"
         android:textSize="@dimen/update_user_input_text_size"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/update_views_height_dimensions"
+        android:layout_below="@+id/update_kilometerage"
+        android:text="@string/vehicle_last_oil_change_text"
+        android:id="@+id/update_last_oil_change"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update_kilometerage"
+        android:layout_toRightOf="@+id/update_last_oil_change"
+        android:id="@+id/update_last_oil_change_textview"
+        android:inputType="number"
+        android:layout_alignBaseline="@+id/update_last_oil_change"
+        android:textSize="@dimen/update_user_input_text_size"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/update_kilometerage"
+        android:layout_below="@+id/update_last_oil_change"
         android:id="@+id/update_button"
         android:text="@string/manage_vehicle_update_button_text"/>
 

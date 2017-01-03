@@ -91,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 120000, pendingIntent);
+        } else {
+            Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
+            PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            alarmManager.cancel(sender);
         }
 
 

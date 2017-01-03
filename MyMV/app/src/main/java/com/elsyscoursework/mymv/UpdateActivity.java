@@ -77,14 +77,6 @@ public class UpdateActivity extends AppCompatActivity {
 
         changedAtTextView.setText(changedAt);
 
-        int kilometerageAsInteger = Integer.parseInt(kilometerage);
-        int changedAtAsInteger = Integer.parseInt(changedAt);
-        int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
-
-        int distanceWithoutOilChange = kilometerageAsInteger - changedAtAsInteger;
-        nextChangeAtAsInteger = 8000 - distanceWithoutOilChange;
-        final String nextOilChangeAt = String.valueOf(nextChangeAtAsInteger);
-
         Button updateButton = (Button) findViewById(R.id.update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +87,6 @@ public class UpdateActivity extends AppCompatActivity {
                 db.update("history", "kilometerage", kilometerageTextView.getText().toString(), idItemAtPosition);
 
                 db.update("oil", "changed_at", changedAtTextView.getText().toString(), idItemAtPosition);
-                db.update("oil", "next_change_at", nextOilChangeAt, idItemAtPosition);
 
                 finish();
             }

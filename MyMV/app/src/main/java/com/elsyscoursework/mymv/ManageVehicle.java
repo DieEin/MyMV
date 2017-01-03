@@ -91,8 +91,12 @@ public class ManageVehicle extends AppCompatActivity {
         int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
 
         int distanceWithoutOilChange = kilometerageAsInteger - changedAtAsInteger;
-        nextChangeAtAsInteger = 8000 - distanceWithoutOilChange;
-        nextChangeAt = String.valueOf(nextChangeAtAsInteger);
+        int nextOilChangeAtAsInteger = 8000 - distanceWithoutOilChange;
+        nextChangeAt = String.valueOf(nextOilChangeAtAsInteger);
+
+        if (nextChangeAtAsInteger != nextOilChangeAtAsInteger) {
+            db.update("oil", "next_change_at", nextChangeAt, idItemAtPosition);
+        }
 
         changedAtTextView.setText(changedAt);
         nextChangeAtTextView.setText(nextChangeAt);

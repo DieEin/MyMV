@@ -1,5 +1,7 @@
 package com.elsyscoursework.mymv;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +77,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(goToManageVehicle);
             }
         });
+
+
+        HashMap<String, String> vehicleOil = db.getVehicleOilFromId(1);
+        String nextChangeAt = vehicleOil.get("next_change_at");
+        int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
+
+        if (nextChangeAtAsInteger <= 100) {
+            Calendar calendar = Calendar.getInstance();
+
+            Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 120000, pendingIntent);
+        }
+
+
+
+
+
 
         // add_new button and what happens when it gets clicked
         Button add_vehicle_button = (Button) findViewById(R.id.add_vehicle_button);

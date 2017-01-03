@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elsyscoursework.mymv">
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +19,8 @@
         </activity>
         <activity android:name=".ManageVehicle" />
         <activity android:name=".UpdateActivity"></activity>
+
+        <receiver android:name=".NotificationReceiver"/>
     </application>
 
 </manifest>

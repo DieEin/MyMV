@@ -1,5 +1,6 @@
 package com.elsyscoursework.mymv;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -78,25 +79,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        HashMap<String, String> vehicleOil = db.getVehicleOilFromId(1);
-        String nextChangeAt = vehicleOil.get("next_change_at");
-        int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
-
-        if (nextChangeAtAsInteger <= 100) {
-            Calendar calendar = Calendar.getInstance();
-
-            Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 120000, pendingIntent);
-        } else {
-            Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
-            PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            alarmManager.cancel(sender);
+        if (!isMyServiceRunning()){
+            startService(new Intent(this, NotificationService.class));
         }
 
 
@@ -169,5 +153,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean isMyServiceRunning() {
+        ActivityManager manager = (ActivityManager) getSystemService(MainActivity.this.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (NotificationService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

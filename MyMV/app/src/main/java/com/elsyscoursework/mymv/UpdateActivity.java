@@ -14,8 +14,6 @@ import java.util.StringTokenizer;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    //private HelperSQL db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,18 +32,11 @@ public class UpdateActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(UpdateActivity.this, String.valueOf(idItemAtPosition), Toast.LENGTH_SHORT);
         toast.show();
 
-        // instance of the database
-        //db = new HelperSQL(getApplicationContext());
-
         // get the information we need
-        /*HashMap<String, String> vehicle = db.getVehicleFromId(idItemAtPosition);
-        String type = vehicle.get("type");
-        String manufacturer = vehicle.get("manufacturer");
-        String model = vehicle.get("model");*/
         Vehicle vehicle = Vehicle.findById(Vehicle.class, Long.valueOf(idItemAtPosition));
-        String type = vehicle.type;
-        String manufacturer = vehicle.manufacturer;
-        String model = vehicle.model;
+        String type = vehicle.getType();
+        String manufacturer = vehicle.getManufacturer();
+        String model = vehicle.getModel();
 
         // find the right text views to show/display the information
         TextView typeTextView = (TextView) findViewById(R.id.update_type_textview);
@@ -57,12 +48,11 @@ public class UpdateActivity extends AppCompatActivity {
         manufacturerTextView.setText(manufacturer);
         modelTextView.setText(model);
 
-        /*
-        HashMap<String, String> vehicleHistory = db.getVehicleHistoryFromId(idItemAtPosition);
-        String owner = vehicleHistory.get("owner");
-        String productionYear = vehicleHistory.get("production_year");
-        String previousOwners = vehicleHistory.get("previous_owners");
-        String kilometerage = vehicleHistory.get("kilometerage");
+        History vehicleHistory = History.findById(History.class, Long.valueOf(idItemAtPosition));
+        String owner = vehicleHistory.getOwner();
+        String productionYear = Integer.toString(vehicleHistory.getProductionYear());
+        String previousOwners = Integer.toString(vehicleHistory.getPreviousOwners());
+        String kilometerage = Integer.toString(vehicleHistory.getKilometerage());
 
         final EditText ownerTextView = (EditText) findViewById(R.id.update_owner_textview);
         final EditText productionYearTextView = (EditText) findViewById(R.id.update_production_year_textview);
@@ -74,24 +64,28 @@ public class UpdateActivity extends AppCompatActivity {
         previousOwnersTextView.setText(previousOwners);
         kilometerageTextView.setText(kilometerage);
 
-        HashMap<String, String> vehicleOil = db.getVehicleOilFromId(idItemAtPosition);
-        String changedAt = vehicleOil.get("changed_at");
-        String nextChangeAt = vehicleOil.get("next_change_at");
+        Oil vehicleOil = Oil.findById(Oil.class, Long.valueOf(idItemAtPosition));
+        String changedAt = Integer.toString(vehicleOil.getChangedAt());
+        String nextChangeAt = Integer.toString(vehicleOil.getNextChangeAt());
 
         final EditText changedAtTextView = (EditText) findViewById(R.id.update_last_oil_change_textview);
 
-        changedAtTextView.setText(changedAt);*/
+        changedAtTextView.setText(changedAt);
 
         Button updateButton = (Button) findViewById(R.id.update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*db.update("history", "owner", ownerTextView.getText().toString(), idItemAtPosition);
-                db.update("history", "production_year", productionYearTextView.getText().toString(), idItemAtPosition);
-                db.update("history", "previous_owners", previousOwnersTextView.getText().toString(), idItemAtPosition);
-                db.update("history", "kilometerage", kilometerageTextView.getText().toString(), idItemAtPosition);
+                History historyToUpdate = History.findById(History.class, Long.valueOf(idItemAtPosition));
+                historyToUpdate.setOwner(ownerTextView.getText().toString());
+                historyToUpdate.setProductionYear(Integer.parseInt(productionYearTextView.getText().toString()));
+                historyToUpdate.setPreviousOwners(Integer.parseInt(previousOwnersTextView.getText().toString()));
+                historyToUpdate.setKilometerage(Integer.parseInt(kilometerageTextView.getText().toString()));
+                historyToUpdate.save();
 
-                db.update("oil", "changed_at", changedAtTextView.getText().toString(), idItemAtPosition);*/
+                Oil oilToUpdate = Oil.findById(Oil.class, Long.valueOf(idItemAtPosition));
+                oilToUpdate.setChangedAt(Integer.parseInt(changedAtTextView.getText().toString()));
+                oilToUpdate.save();
 
                 finish();
             }

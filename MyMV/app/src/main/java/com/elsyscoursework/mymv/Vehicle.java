@@ -8,9 +8,9 @@ import com.orm.SugarRecord;
 
 public class Vehicle extends SugarRecord {
 
-    String type;
-    String manufacturer;
-    String model;
+    private String type;
+    private String manufacturer;
+    private String model;
 
     public Vehicle() {
 
@@ -20,5 +20,17 @@ public class Vehicle extends SugarRecord {
         this.type = type;
         this.manufacturer = manufacturer;
         this.model = model;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public String getModel() {
+        return model;
     }
 }

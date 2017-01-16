@@ -27,7 +27,6 @@ import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private HelperSQL db;
     private AlertDialog.Builder dialog;
     private final int TEXT_SIZE = 20;
 
@@ -44,22 +43,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get db information for every vehicle
-        /*db = new HelperSQL(getApplicationContext());
-        final ArrayList<String> vehicle = db.getVehicleForList();
-        String[] vehicleInformation = new String[vehicle.size()];
-        int counter = 0;
-        for(String str : vehicle) {
-            vehicleInformation[counter] = str;
-            counter++;
-        }*/
-
         List<Vehicle> vehicleInf = Vehicle.listAll(Vehicle.class);
         String[] vehicleInformation = new String[vehicleInf.size()];
 
         int counter = 0;
         for(Vehicle veh : vehicleInf) {
-            vehicleInformation[counter] = veh.getId() + "." + veh.manufacturer + " " + veh.model;
+            vehicleInformation[counter] = veh.getId() + "." + veh.getManufacturer() + " " + veh.getModel();
 
             counter++;
         }
@@ -152,9 +141,15 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //db.addVehicle(setType.getSelectedItem().toString(), setManufacturer.getText().toString(), setModel.getText().toString());
                         Vehicle newVehicle = new Vehicle(setType.getSelectedItem().toString(), setManufacturer.getText().toString(), setModel.getText().toString());
                         newVehicle.save();
+
+                        History newHistory = new History("", 0, 0, 0);
+                        newHistory.save();
+
+                        Oil newOil = new Oil(0, 8000);
+                        newOil.save();
+
                         finish();
                         startActivity(getIntent());
                     }

@@ -22,11 +22,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private HelperSQL db;
+    //private HelperSQL db;
     private AlertDialog.Builder dialog;
     private final int TEXT_SIZE = 20;
 
@@ -44,12 +45,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // get db information for every vehicle
-        db = new HelperSQL(getApplicationContext());
+        /*db = new HelperSQL(getApplicationContext());
         final ArrayList<String> vehicle = db.getVehicleForList();
         String[] vehicleInformation = new String[vehicle.size()];
         int counter = 0;
         for(String str : vehicle) {
             vehicleInformation[counter] = str;
+            counter++;
+        }*/
+
+        List<Vehicle> vehicleInf = Vehicle.listAll(Vehicle.class);
+        String[] vehicleInformation = new String[vehicleInf.size()];
+
+        int counter = 0;
+        for(Vehicle veh : vehicleInf) {
+            vehicleInformation[counter] = veh.getId() + "." + veh.manufacturer + " " + veh.model;
+
             counter++;
         }
 
@@ -79,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (!isMyServiceRunning()){
+        /*if (!isMyServiceRunning()){
             startService(new Intent(this, NotificationService.class));
-        }
+        }*/
 
 
 
@@ -141,7 +152,9 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        db.addVehicle(setType.getSelectedItem().toString(), setManufacturer.getText().toString(), setModel.getText().toString());
+                        //db.addVehicle(setType.getSelectedItem().toString(), setManufacturer.getText().toString(), setModel.getText().toString());
+                        Vehicle newVehicle = new Vehicle(setType.getSelectedItem().toString(), setManufacturer.getText().toString(), setModel.getText().toString());
+                        newVehicle.save();
                         finish();
                         startActivity(getIntent());
                     }

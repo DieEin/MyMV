@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    private HelperSQL db;
+    //private HelperSQL db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,17 @@ public class UpdateActivity extends AppCompatActivity {
         toast.show();
 
         // instance of the database
-        db = new HelperSQL(getApplicationContext());
+        //db = new HelperSQL(getApplicationContext());
 
         // get the information we need
-        HashMap<String, String> vehicle = db.getVehicleFromId(idItemAtPosition);
+        /*HashMap<String, String> vehicle = db.getVehicleFromId(idItemAtPosition);
         String type = vehicle.get("type");
         String manufacturer = vehicle.get("manufacturer");
-        String model = vehicle.get("model");
+        String model = vehicle.get("model");*/
+        Vehicle vehicle = Vehicle.findById(Vehicle.class, Long.valueOf(idItemAtPosition));
+        String type = vehicle.type;
+        String manufacturer = vehicle.manufacturer;
+        String model = vehicle.model;
 
         // find the right text views to show/display the information
         TextView typeTextView = (TextView) findViewById(R.id.update_type_textview);
@@ -53,6 +57,7 @@ public class UpdateActivity extends AppCompatActivity {
         manufacturerTextView.setText(manufacturer);
         modelTextView.setText(model);
 
+        /*
         HashMap<String, String> vehicleHistory = db.getVehicleHistoryFromId(idItemAtPosition);
         String owner = vehicleHistory.get("owner");
         String productionYear = vehicleHistory.get("production_year");
@@ -75,18 +80,18 @@ public class UpdateActivity extends AppCompatActivity {
 
         final EditText changedAtTextView = (EditText) findViewById(R.id.update_last_oil_change_textview);
 
-        changedAtTextView.setText(changedAt);
+        changedAtTextView.setText(changedAt);*/
 
         Button updateButton = (Button) findViewById(R.id.update_button);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.update("history", "owner", ownerTextView.getText().toString(), idItemAtPosition);
+                /*db.update("history", "owner", ownerTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "production_year", productionYearTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "previous_owners", previousOwnersTextView.getText().toString(), idItemAtPosition);
                 db.update("history", "kilometerage", kilometerageTextView.getText().toString(), idItemAtPosition);
 
-                db.update("oil", "changed_at", changedAtTextView.getText().toString(), idItemAtPosition);
+                db.update("oil", "changed_at", changedAtTextView.getText().toString(), idItemAtPosition);*/
 
                 finish();
             }

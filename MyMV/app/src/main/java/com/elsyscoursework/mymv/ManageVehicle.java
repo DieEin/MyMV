@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class ManageVehicle extends AppCompatActivity {
 
-    private HelperSQL db;
+    //private HelperSQL db;
 
     // restart activity in order to update on-screen information after back button was clicked
     @Override
@@ -45,13 +45,17 @@ public class ManageVehicle extends AppCompatActivity {
         toast.show();
 
         // instance of the database
-        db = new HelperSQL(getApplicationContext());
+        //db = new HelperSQL(getApplicationContext());
 
         // get the information we need
-        HashMap<String, String> vehicle = db.getVehicleFromId(idItemAtPosition);
+        /*HashMap<String, String> vehicle = db.getVehicleFromId(idItemAtPosition);
         String type = vehicle.get("type");
         String manufacturer = vehicle.get("manufacturer");
-        String model = vehicle.get("model");
+        String model = vehicle.get("model");*/
+        Vehicle vehicle = Vehicle.findById(Vehicle.class, Long.valueOf(idItemAtPosition));
+        String type = vehicle.type;
+        String manufacturer = vehicle.manufacturer;
+        String model = vehicle.model;
 
         // find the right text views to show/display the information
         TextView typeTextView = (TextView) findViewById(R.id.manage_vehicle_type_textview);
@@ -63,7 +67,7 @@ public class ManageVehicle extends AppCompatActivity {
         manufacturerTextView.setText(manufacturer);
         modelTextView.setText(model);
 
-        HashMap<String, String> vehicleHistory = db.getVehicleHistoryFromId(idItemAtPosition);
+        /*HashMap<String, String> vehicleHistory = db.getVehicleHistoryFromId(idItemAtPosition);
         String owner = vehicleHistory.get("owner");
         String productionYear = vehicleHistory.get("production_year");
         String previousOwners = vehicleHistory.get("previous_owners");
@@ -99,7 +103,7 @@ public class ManageVehicle extends AppCompatActivity {
         }
 
         changedAtTextView.setText(changedAt);
-        nextChangeAtTextView.setText(nextChangeAt);
+        nextChangeAtTextView.setText(nextChangeAt);*/
 
         // the update button and what happens when it gets clicked
         Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);
@@ -116,7 +120,10 @@ public class ManageVehicle extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.delete(idItemAtPosition);
+                //db.delete(idItemAtPosition);
+                Vehicle vehicle = Vehicle.findById(Vehicle.class, Long.valueOf(idItemAtPosition));
+                vehicle.delete();
+
                 finish();
             }
         });

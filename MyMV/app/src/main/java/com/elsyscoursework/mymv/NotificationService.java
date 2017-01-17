@@ -35,7 +35,8 @@ public class NotificationService extends Service {
             if (vehOil.getNextChangeAt() <= 100) {
                 Calendar calendar = Calendar.getInstance();
 
-                Intent startNotificationIntent = new Intent(this, NotificationReceiver.class);
+                Intent startNotificationIntent = new Intent(NotificationService.this, NotificationReceiver.class);
+                startNotificationIntent.putExtra("test", vehOil.getId());
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 100, startNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

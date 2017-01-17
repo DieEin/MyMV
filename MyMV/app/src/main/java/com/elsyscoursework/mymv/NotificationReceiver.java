@@ -27,10 +27,13 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+        long testt = intent.getLongExtra("test", 0);
+        String test = String.valueOf(testt);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.round_button)
-                .setContentTitle("Notification title")
+                .setContentTitle(test)
                 .setContentText("Notification text")
                 .setSound(alarmSound)
                 .setAutoCancel(true);

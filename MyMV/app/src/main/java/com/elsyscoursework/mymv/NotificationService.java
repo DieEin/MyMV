@@ -8,9 +8,9 @@ import android.os.IBinder;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class NotificationService extends Service {
-    //private HelperSQL db;
 
     public NotificationService() {
     }
@@ -18,18 +18,40 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //db = new HelperSQL(getApplicationContext());
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        new Thread() {
+        /*new Thread() {
             @Override
             public void run() {
                 handleNotification();
             }
-        }.start();
+        }.start();*/
+
+        List<Oil> oil = Oil.listAll(Oil.class);
+        for(Oil vehOil : oil) {
+            if (vehOil.getNextChangeAt() <= 100) {
+                Calendar calendar = Calendar.getInstance();
+
+                Intent startNotificationIntent = new Intent(this, NotificationReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 100, startNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, pendingIntent);
+            } else {
+                Intent stopNotificationIntent = new Intent(this, NotificationReceiver.class);
+                PendingIntent sender = PendingIntent.getBroadcast(this, 100, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                alarmManager.cancel(sender);
+            }
+        }
+
+        //Oil oil = Oil.findById(Oil.class, 1L);
+
+        stopSelf();
 
         return START_STICKY;
     }

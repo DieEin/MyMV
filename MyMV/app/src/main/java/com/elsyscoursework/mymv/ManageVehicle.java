@@ -93,6 +93,8 @@ public class ManageVehicle extends AppCompatActivity {
         if (nextChangeAtAsInteger != nextOilChangeAtAsInteger) {
             vehicleOil.setNextChangeAt(nextOilChangeAtAsInteger);
             vehicleOil.save();
+
+            startService(new Intent(this, NotificationService.class));
         }
 
         changedAtTextView.setText(changedAt);

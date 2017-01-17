@@ -12,6 +12,9 @@ import java.util.List;
 
 public class NotificationService extends Service {
 
+    final String VEHICLE_OIL_ID_TEXT = "vehicleOilId";
+    final int UNIQUE_VALUE = 100;
+
     public NotificationService() {
     }
 
@@ -32,18 +35,24 @@ public class NotificationService extends Service {
 
         List<Oil> oil = Oil.listAll(Oil.class);
         for(Oil vehOil : oil) {
+
+            // make unique request code for every vehicle (in order to support multiple notifications)
+            String oilIdAsString = String.valueOf(vehOil.getId());
+            int requestCode = UNIQUE_VALUE + Integer.parseInt(oilIdAsString);
+
             if (vehOil.getNextChangeAt() <= 100) {
                 Calendar calendar = Calendar.getInstance();
 
                 Intent startNotificationIntent = new Intent(NotificationService.this, NotificationReceiver.class);
-                startNotificationIntent.putExtra("test", vehOil.getId());
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 100, startNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                startNotificationIntent.putExtra(VEHICLE_OIL_ID_TEXT, vehOil.getId());
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, startNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, pendingIntent);
             } else {
                 Intent stopNotificationIntent = new Intent(this, NotificationReceiver.class);
-                PendingIntent sender = PendingIntent.getBroadcast(this, 100, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent sender = PendingIntent.getBroadcast(this, requestCode, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
                 alarmManager.cancel(sender);

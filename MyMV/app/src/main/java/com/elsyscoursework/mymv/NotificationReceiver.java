@@ -15,29 +15,35 @@ import android.support.v4.app.NotificationCompat;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
+    final String VEHICLE_OIL_ID_TEXT = "vehicleOilId";
+    final long DEFAULT_PASSED_VALUE = 0L;
+    final int UNIQUE_VALUE = 100;
+
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        long oilIdAsLong = intent.getLongExtra(VEHICLE_OIL_ID_TEXT, DEFAULT_PASSED_VALUE);
+        String oilIdAsString = String.valueOf(oilIdAsLong);
+        int requestCode = UNIQUE_VALUE + Integer.parseInt(oilIdAsString);
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent repeatingIntent = new Intent(context, MainActivity.class);
 
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, requestCode, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        long testt = intent.getLongExtra("test", 0);
-        String test = String.valueOf(testt);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.round_button)
-                .setContentTitle(test)
+                .setContentTitle(oilIdAsString)
                 .setContentText("Notification text")
                 .setSound(alarmSound)
                 .setAutoCancel(true);
 
-        notificationManager.notify(100, builder.build());
+        notificationManager.notify(requestCode, builder.build());
     }
 }

@@ -18,6 +18,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     final String VEHICLE_OIL_ID_TEXT = "vehicleOilId";
     final long DEFAULT_PASSED_VALUE = 0L;
     final int UNIQUE_VALUE = 100;
+    final String PASSED_VARIABLE_NAME = "idItemAtPosition";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,7 +29,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent repeatingIntent = new Intent(context, MainActivity.class);
+        Intent repeatingIntent = new Intent(context, ManageVehicle.class);
+        repeatingIntent.putExtra(PASSED_VARIABLE_NAME, Integer.parseInt(oilIdAsString));
 
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

@@ -24,4 +24,11 @@
         android:background="@drawable/round_button"
         android:text="@string/add_new"/>
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/test"
+        android:layout_below="@+id/add_vehicle_button"
+        android:text="test"/>
+
 </RelativeLayout>

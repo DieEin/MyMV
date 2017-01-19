@@ -3,6 +3,7 @@ package com.elsyscoursework.mymv;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,6 +84,30 @@ public class MainActivity extends AppCompatActivity {
         /*if (!isMyServiceRunning()){
             startService(new Intent(this, NotificationService.class));
         }*/
+
+
+
+        Button testButton = (Button) findViewById(R.id.test);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (mBluetoothAdapter == null) {
+                    Toast noBluetoothSupport = Toast.makeText(MainActivity.this, "Bluetooth is not supported", Toast.LENGTH_SHORT);
+                    noBluetoothSupport.show();
+                }
+
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, 1);
+                }
+            }
+        });
+
+
+
+
+
 
 
 

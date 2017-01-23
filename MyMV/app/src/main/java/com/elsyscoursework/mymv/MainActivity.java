@@ -1,5 +1,6 @@
 package com.elsyscoursework.mymv;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -38,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         finish();
         startActivity(getIntent());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(MainActivity.this, "Bluetooth enabled!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Bluetooth NOT enabled!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

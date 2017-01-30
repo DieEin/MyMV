@@ -30,6 +30,8 @@ public class ListDevicesActivity extends AppCompatActivity {
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
 
+    public static final String DEVICE_ADDRESS = "device_address";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +119,7 @@ public class ListDevicesActivity extends AppCompatActivity {
             String address = deviceInfo.substring(deviceInfo.length() - 17);
 
             Intent intent = new Intent();
-            intent.putExtra("device_address", address);
+            intent.putExtra(DEVICE_ADDRESS, address);
 
             setResult(Activity.RESULT_OK, intent);
 

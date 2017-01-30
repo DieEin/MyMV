@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -47,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(MainActivity.this, "Bluetooth enabled!", Toast.LENGTH_SHORT).show();
+                String address = data.getExtras().getString(ListDevicesActivity.DEVICE_ADDRESS);
+
+                Toast.makeText(MainActivity.this, address, Toast.LENGTH_LONG).show();
+                //BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
             } else {
                 Toast.makeText(MainActivity.this, "Bluetooth NOT enabled!", Toast.LENGTH_SHORT).show();
             }

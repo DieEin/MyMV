@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     private AlertDialog.Builder dialog;
     private final int TEXT_SIZE = 20;
@@ -103,16 +104,19 @@ public class MainActivity extends AppCompatActivity {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                if (mBluetoothAdapter == null) {
-                    Toast noBluetoothSupport = Toast.makeText(MainActivity.this, "Bluetooth is not supported", Toast.LENGTH_SHORT);
-                    noBluetoothSupport.show();
-                }
+//                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//                if (mBluetoothAdapter == null) {
+//                    Toast noBluetoothSupport = Toast.makeText(MainActivity.this, "Bluetooth is not supported", Toast.LENGTH_SHORT);
+//                    noBluetoothSupport.show();
+//                }
+//
+//                if (!mBluetoothAdapter.isEnabled()) {
+//                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                    startActivityForResult(enableBtIntent, 1);
+//                }
 
-                if (!mBluetoothAdapter.isEnabled()) {
-                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableBtIntent, 1);
-                }
+                Intent intent = new Intent(MainActivity.this, ListDevicesActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
 

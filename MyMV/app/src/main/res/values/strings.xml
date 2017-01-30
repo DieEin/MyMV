@@ -12,4 +12,7 @@
     <string name="vehicle_kilometerage_text">Kilometerage:</string>
     <string name="vehicle_last_oil_change_text">Last oil change:</string>
     <string name="vehicle_next_oil_change_text">Next oil change at:</string>
+    <string name="paired_devices_text">paired devices</string>
+    <string name="scan_button">scan</string>
+    <string name="discovered_devices_text">discovered devices</string>
 </resources>

@@ -15,6 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  * Created by Tomi on 5.2.2017 г..
  */
@@ -45,15 +51,25 @@ public class ImportExportActivity extends AppCompatActivity {
                 case MESSAGE_STATE_CHANGE:
                     break;
                 case MESSAGE_WRITE:
-                    Toast.makeText(ImportExportActivity.this, "stuffs3", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ImportExportActivity.this, "stuffs3", Toast.LENGTH_LONG).show();
                     byte[] writeBuffer = (byte[]) msg.obj;
                     String writeMessage = new String(writeBuffer);
                     testView.setText("Message sent!");
                     break;
                 case MESSAGE_READ:
-                    Toast.makeText(ImportExportActivity.this, "stuffs2", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ImportExportActivity.this, "stuffs2", Toast.LENGTH_LONG).show();
                     byte[] readBuffer = (byte[]) msg.obj;
                     String readMessage = new String(readBuffer, 0, msg.arg1);
+                    try {
+                        Vehicle vehic = deserialize(readBuffer);
+                        readMessage = vehic.getManufacturer();
+                        Vehicle newVeh = vehic;
+                        newVeh.save();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     testView.setText(readMessage);
                     break;
                 case MESSAGE_DEVICE_NAME:
@@ -94,7 +110,14 @@ public class ImportExportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message = testView2.getText().toString();
-                byte[] send = message.getBytes();
+                //byte[] send = message.getBytes();
+                Vehicle veh = Vehicle.findById(Vehicle.class, 1L);
+                byte[] send = new byte[0];
+                try {
+                    send = serialize(veh);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 mService.write(send);
             }
         });
@@ -153,5 +176,18 @@ public class ImportExportActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    public byte[] serialize(Vehicle veh) throws IOException {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        ObjectOutputStream o = new ObjectOutputStream(b);
+        o.writeObject(veh);
+        return b.toByteArray();
+    }
+
+    public static Vehicle deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream b = new ByteArrayInputStream(bytes);
+        ObjectInputStream o = new ObjectInputStream(b);
+        return (Vehicle) o.readObject();
     }
 }

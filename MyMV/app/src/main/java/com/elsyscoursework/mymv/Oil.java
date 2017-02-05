@@ -2,11 +2,13 @@ package com.elsyscoursework.mymv;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
+
 /**
  * Created by Tomi on 16.1.2017 г..
  */
 
-public class Oil extends SugarRecord {
+public class Oil extends SugarRecord implements Serializable {
 
     private int changedAt;
     private int nextChangeAt;

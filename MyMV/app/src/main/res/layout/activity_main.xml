@@ -31,4 +31,22 @@
         android:layout_below="@+id/add_vehicle_button"
         android:text="test"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/testView"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/test"
+        android:id="@+id/testView2"/>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/test2"
+        android:layout_below="@+id/testView2"
+        android:text="send"/>
+
 </RelativeLayout>

@@ -44,7 +44,7 @@ public class BluetoothService {
 
     private synchronized void setState(int state) {
         mState = state;
-        mHandler.obtainMessage(MainActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+        mHandler.obtainMessage(ImportExportActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
     }
 
     public synchronized int getState() {
@@ -125,9 +125,9 @@ public class BluetoothService {
         mConnectedThread = new ConnectedThread(socket);
         mConnectedThread.start();
 
-        Message message = mHandler.obtainMessage(MainActivity.MESSAGE_DEVICE_NAME);
+        Message message = mHandler.obtainMessage(ImportExportActivity.MESSAGE_DEVICE_NAME);
         Bundle bundle = new Bundle();
-        bundle.putString(MainActivity.DEVICE_NAME, device.getName());
+        bundle.putString(ImportExportActivity.DEVICE_NAME, device.getName());
         message.setData(bundle);
         mHandler.sendMessage(message);
         setState(STATE_CONNECTED);
@@ -150,9 +150,9 @@ public class BluetoothService {
     private void failedConnection() {
         setState(STATE_LISTEN);
 
-        Message message = mHandler.obtainMessage(MainActivity.MESSAGE_TOAST);
+        Message message = mHandler.obtainMessage(ImportExportActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(MainActivity.TOAST, "Unable to connect device");
+        bundle.putString(ImportExportActivity.TOAST, "Unable to connect device");
         message.setData(bundle);
         mHandler.sendMessage(message);
     }
@@ -160,9 +160,9 @@ public class BluetoothService {
     private void lostConnection() {
         setState(STATE_LISTEN);
 
-        Message message = mHandler.obtainMessage(MainActivity.MESSAGE_TOAST);
+        Message message = mHandler.obtainMessage(ImportExportActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(MainActivity.TOAST, "Device connection was lost");
+        bundle.putString(ImportExportActivity.TOAST, "Device connection was lost");
         message.setData(bundle);
         mHandler.sendMessage(message);
     }
@@ -307,7 +307,7 @@ public class BluetoothService {
             while (true) {
                 try {
                     bytes = mmInStream.read(buffer);
-                    mHandler.obtainMessage(MainActivity.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
+                    mHandler.obtainMessage(ImportExportActivity.MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
 
@@ -321,7 +321,7 @@ public class BluetoothService {
             try {
                 mmOutStream.write(buffer);
 
-                mHandler.obtainMessage(MainActivity.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
+                mHandler.obtainMessage(ImportExportActivity.MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -39,54 +39,10 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int MESSAGE_STATE_CHANGE = 1;
-    public static final int MESSAGE_READ = 2;
-    public static final int MESSAGE_WRITE = 3;
-    public static final int MESSAGE_DEVICE_NAME = 4;
-    public static final int MESSAGE_TOAST = 5;
-
-    public static final String DEVICE_NAME = "device_name";
-    public static final String TOAST = "toast";
-
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private BluetoothService mService = null;
 
     private AlertDialog.Builder dialog;
     private final int TEXT_SIZE = 20;
-
-    TextView testView;
-
-    private final Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MESSAGE_STATE_CHANGE:
-                    break;
-                case MESSAGE_WRITE:
-                    Toast.makeText(MainActivity.this, "stuffs3", Toast.LENGTH_LONG).show();
-                    byte[] writeBuffer = (byte[]) msg.obj;
-                    String writeMessage = new String(writeBuffer);
-                    testView.setText("Message sent!");
-                    break;
-                case MESSAGE_READ:
-                    Toast.makeText(MainActivity.this, "stuffs2", Toast.LENGTH_LONG).show();
-                    byte[] readBuffer = (byte[]) msg.obj;
-                    String readMessage = new String(readBuffer, 0, msg.arg1);
-                    testView.setText(readMessage);
-                    break;
-                case MESSAGE_DEVICE_NAME:
-                    // save the connected device's name
-                    String mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-                    Toast.makeText(getApplicationContext(), "Connected to "
-                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
-                    break;
-                case MESSAGE_TOAST:
-                    Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
-                            Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
 
     // restart activity in order to update on-screen information after back button was clicked
     @Override
@@ -94,31 +50,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         finish();
         startActivity(getIntent());
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                //Toast.makeText(MainActivity.this, "Bluetooth enabled!", Toast.LENGTH_SHORT).show();
-                String address = data.getExtras().getString(ListDevicesActivity.DEVICE_ADDRESS);
-
-                //Toast.makeText(MainActivity.this, address, Toast.LENGTH_LONG).show();
-
-                mService = new BluetoothService(MainActivity.this, mHandler);
-
-                BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-                //mService.start();
-                mService.connect(device);
-
-//                String message = "hehehe";
-//                byte[] send = message.getBytes();
-//                mService.write(send);
-                Toast.makeText(MainActivity.this, "stuffs", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Bluetooth NOT enabled!", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public static byte[] serialize(Object obj) {
@@ -139,30 +70,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mService != null) {
-            if (mService.getState() == BluetoothService.STATE_NONE) {
-                mService.start();
-            }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mService != null) {
-            mService.stop();
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        testView = (TextView) findViewById(R.id.testView);
 
         List<Vehicle> vehicleInf = Vehicle.listAll(Vehicle.class);
         String[] vehicleInformation = new String[vehicleInf.size()];
@@ -204,40 +114,14 @@ public class MainActivity extends AppCompatActivity {
             startService(new Intent(this, NotificationService.class));
         }*/
 
-
-
-        Button testButton = (Button) findViewById(R.id.test);
-        testButton.setOnClickListener(new View.OnClickListener() {
+        Button transferButton = (Button) findViewById(R.id.import_export_button);
+        transferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//                if (mBluetoothAdapter == null) {
-//                    Toast noBluetoothSupport = Toast.makeText(MainActivity.this, "Bluetooth is not supported", Toast.LENGTH_SHORT);
-//                    noBluetoothSupport.show();
-//                }
-//
-//                if (!mBluetoothAdapter.isEnabled()) {
-//                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                    startActivityForResult(enableBtIntent, 1);
-//                }
-
-                Intent intent = new Intent(MainActivity.this, ListDevicesActivity.class);
-                startActivityForResult(intent, 1);
+                Intent importExportIntent = new Intent(MainActivity.this, ImportExportActivity.class);
+                startActivity(importExportIntent);
             }
         });
-
-        final EditText testView2 = (EditText) findViewById(R.id.testView2);
-
-        Button test2 = (Button) findViewById(R.id.test2);
-        test2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = testView2.getText().toString();
-                byte[] send = message.getBytes();
-                mService.write(send);
-            }
-        });
-
 
 
 

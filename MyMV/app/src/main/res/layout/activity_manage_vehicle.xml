@@ -17,7 +17,7 @@
         android:id="@+id/manage_vehicle_type"
         android:textSize="@dimen/manage_vehicle_text_size"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/manage_vehicle_type_textview"
         android:layout_toRightOf="@+id/manage_vehicle_type"
@@ -31,7 +31,7 @@
         android:layout_below="@+id/manage_vehicle_type"
         android:textSize="@dimen/manage_vehicle_text_size"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/manage_vehicle_manufacturer_textview"
         android:layout_below="@+id/manage_vehicle_type"
@@ -46,7 +46,7 @@
         android:layout_below="@+id/manage_vehicle_manufacturer"
         android:textSize="@dimen/manage_vehicle_text_size"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/manage_vehicle_model_textview"
         android:layout_below="@+id/manage_vehicle_manufacturer"
@@ -62,7 +62,7 @@
         android:textSize="@dimen/manage_vehicle_text_size"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/manage_vehicle_model"
         android:layout_toRightOf="@+id/vehicle_owner"
@@ -78,7 +78,7 @@
         android:textSize="@dimen/manage_vehicle_text_size"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/vehicle_owner"
         android:layout_toRightOf="@+id/vehicle_production_year"
@@ -94,7 +94,7 @@
         android:textSize="@dimen/manage_vehicle_text_size"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/vehicle_production_year"
         android:layout_toRightOf="@+id/vehicle_previous_owners"
@@ -110,7 +110,7 @@
         android:textSize="@dimen/manage_vehicle_text_size"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/vehicle_previous_owners"
         android:layout_toRightOf="@+id/vehicle_kilometerage"
@@ -126,7 +126,7 @@
         android:textSize="@dimen/manage_vehicle_text_size"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/vehicle_kilometerage"
         android:layout_toRightOf="@+id/vehicle_last_oil_change"

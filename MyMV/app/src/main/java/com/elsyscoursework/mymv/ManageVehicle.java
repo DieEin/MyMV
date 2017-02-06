@@ -78,6 +78,9 @@ public class ManageVehicle extends AppCompatActivity {
         kilometerageTextView.setText(kilometerage);
 
         ownerTextView.setOnClickListener(new ManageVehicleOnClickListener(ManageVehicle.this, idItemAtPosition));
+        productionYearTextView.setOnClickListener(new ManageVehicleOnClickListener(ManageVehicle.this, idItemAtPosition));
+        previousOwnersTextView.setOnClickListener(new ManageVehicleOnClickListener(ManageVehicle.this, idItemAtPosition));
+        kilometerageTextView.setOnClickListener(new ManageVehicleOnClickListener(ManageVehicle.this, idItemAtPosition));
 
         Oil vehicleOil = Oil.findById(Oil.class, Long.valueOf(idItemAtPosition));
         String changedAt = Integer.toString(vehicleOil.getChangedAt());
@@ -103,6 +106,8 @@ public class ManageVehicle extends AppCompatActivity {
 
         changedAtTextView.setText(changedAt);
         nextChangeAtTextView.setText(nextChangeAt);
+
+        changedAtTextView.setOnClickListener(new ManageVehicleOnClickListener(ManageVehicle.this, idItemAtPosition));
 
         TextView maintenanceTextView = (TextView) findViewById(R.id.vehicle_maintenance);
         maintenanceTextView.setOnClickListener(new View.OnClickListener() {

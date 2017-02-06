@@ -43,6 +43,7 @@ public class ImportExportActivity extends AppCompatActivity {
     private BluetoothService mService = null;
 
     TextView testView;
+    int counter = 0;
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -60,17 +61,26 @@ public class ImportExportActivity extends AppCompatActivity {
                     //Toast.makeText(ImportExportActivity.this, "stuffs2", Toast.LENGTH_LONG).show();
                     byte[] readBuffer = (byte[]) msg.obj;
                     String readMessage = new String(readBuffer, 0, msg.arg1);
+
                     try {
                         Vehicle vehic = deserialize(readBuffer);
                         readMessage = vehic.getManufacturer();
                         Vehicle newVeh = vehic;
                         newVeh.save();
+
+                        History newHist = new History("", 0, 0, 0);
+                        newHist.save();
+
+                        Oil newOil = new Oil(0, 8000);
+                        newOil.save();
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                     testView.setText(readMessage);
+
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name

@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 /**
  * Created by Tomi on 5.2.2017 г..
@@ -63,7 +64,24 @@ public class ImportExportActivity extends AppCompatActivity {
                     String readMessage = new String(readBuffer, 0, msg.arg1);
 
                     try {
-                        Vehicle vehic = deserialize(readBuffer);
+                        WholeVehicle vehicle = deserialize(readBuffer);
+
+                        Vehicle veh = vehicle.getVehicle();
+                        veh.save();
+                        History his = vehicle.getHistory();
+                        readMessage = his.getOwner();
+                        his.save();
+                        Oil oil = vehicle.getOil();
+                        oil.save();
+                        List<Maintenance> maintenance = vehicle.getMaintenance();
+                        //maintenance.setVehicleId(Integer.valueOf(veh.getId().toString()));
+                        //maintenance.save();
+                        for (Maintenance m : maintenance) {
+                            m.setVehicleId(Integer.valueOf(veh.getId().toString()));
+                            m.save();
+                        }
+
+                        /*Vehicle vehic = deserialize(readBuffer);
                         readMessage = vehic.getManufacturer();
                         Vehicle newVeh = vehic;
                         newVeh.save();
@@ -72,7 +90,7 @@ public class ImportExportActivity extends AppCompatActivity {
                         newHist.save();
 
                         Oil newOil = new Oil(0, 8000);
-                        newOil.save();
+                        newOil.save();*/
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -122,9 +140,14 @@ public class ImportExportActivity extends AppCompatActivity {
                 String message = testView2.getText().toString();
                 //byte[] send = message.getBytes();
                 Vehicle veh = Vehicle.findById(Vehicle.class, 1L);
+                History his = History.findById(History.class, 1L);
+                Oil oil = Oil.findById(Oil.class, 1L);
+                List<Maintenance> maintenance = Maintenance.find(Maintenance.class, "vehicle_id = ?", "1");
+                WholeVehicle vehicle = new WholeVehicle(veh, his, oil, maintenance);
+
                 byte[] send = new byte[0];
                 try {
-                    send = serialize(veh);
+                    send = serialize(vehicle);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -188,16 +211,16 @@ public class ImportExportActivity extends AppCompatActivity {
         }
     }
 
-    public byte[] serialize(Vehicle veh) throws IOException {
+    public byte[] serialize(WholeVehicle veh) throws IOException {
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         ObjectOutputStream o = new ObjectOutputStream(b);
         o.writeObject(veh);
         return b.toByteArray();
     }
 
-    public static Vehicle deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+    public static WholeVehicle deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream b = new ByteArrayInputStream(bytes);
         ObjectInputStream o = new ObjectInputStream(b);
-        return (Vehicle) o.readObject();
+        return (WholeVehicle) o.readObject();
     }
 }

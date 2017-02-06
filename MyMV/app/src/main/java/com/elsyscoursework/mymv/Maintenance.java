@@ -2,11 +2,13 @@ package com.elsyscoursework.mymv;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
+
 /**
  * Created by Tomi on 6.2.2017 г..
  */
 
-public class Maintenance extends SugarRecord {
+public class Maintenance extends SugarRecord implements Serializable {
 
     private String type;
     private String date;

@@ -5,4 +5,6 @@
     <dimen name="add_vehicle_button_dimensions">50dp</dimen>
     <dimen name="update_user_input_text_size">13sp</dimen>
     <dimen name="update_views_height_dimensions">35dp</dimen>
+    <dimen name="manage_vehicle_text_size">20sp</dimen>
+    <dimen name="maintenance_buttons_sizes">15sp</dimen>
 </resources>

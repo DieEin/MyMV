@@ -15,4 +15,7 @@
     <string name="paired_devices_text">paired devices</string>
     <string name="scan_button">scan</string>
     <string name="discovered_devices_text">discovered devices</string>
+    <string name="manage_vehicle_maintenance">Maintenance</string>
+    <string name="maintenance_statistics_button">Statistics</string>
+    <string name="maintenance_add_button">Add</string>
 </resources>

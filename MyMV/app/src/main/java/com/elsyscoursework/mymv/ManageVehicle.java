@@ -2,11 +2,13 @@ package com.elsyscoursework.mymv;
 
 import android.content.Intent;
 import android.support.annotation.IntegerRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +77,8 @@ public class ManageVehicle extends AppCompatActivity {
         previousOwnersTextView.setText(previousOwners);
         kilometerageTextView.setText(kilometerage);
 
+        ownerTextView.setOnClickListener(new ManageVehicleOnClickListener(ManageVehicle.this, idItemAtPosition));
+
         Oil vehicleOil = Oil.findById(Oil.class, Long.valueOf(idItemAtPosition));
         String changedAt = Integer.toString(vehicleOil.getChangedAt());
         String nextChangeAt = Integer.toString(vehicleOil.getNextChangeAt());
@@ -99,6 +103,16 @@ public class ManageVehicle extends AppCompatActivity {
 
         changedAtTextView.setText(changedAt);
         nextChangeAtTextView.setText(nextChangeAt);
+
+        TextView maintenanceTextView = (TextView) findViewById(R.id.vehicle_maintenance);
+        maintenanceTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToVehicleMaintenance = new Intent(ManageVehicle.this, VehicleMaintenance.class);
+                goToVehicleMaintenance.putExtra(PASSED_VARIABLE_NAME, idItemAtPosition);
+                startActivity(goToVehicleMaintenance);
+            }
+        });
 
         // the update button and what happens when it gets clicked
         Button updateButton = (Button) findViewById(R.id.manage_vehicle_update_button);

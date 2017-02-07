@@ -47,8 +47,8 @@ public class VehicleMaintenance extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         final int idItemAtPosition = receivedIntent.getIntExtra(PASSED_VARIABLE_NAME, DEFAULT_PASSED_INT_VALUE);
 
-        List<Maintenance> maintenanceList = Maintenance.find(Maintenance.class, "vehicle_id = ?", String.valueOf(idItemAtPosition));
-        String[] vehicleMaintenanceList = new String[maintenanceList.size()];
+        final List<Maintenance> maintenanceList = Maintenance.find(Maintenance.class, "vehicle_id = ?", String.valueOf(idItemAtPosition));
+        final String[] vehicleMaintenanceList = new String[maintenanceList.size()];
 
         int counter = 0;
         for(Maintenance m : maintenanceList) {
@@ -142,6 +142,16 @@ public class VehicleMaintenance extends AppCompatActivity {
 
                 AlertDialog dialogShow = dialog.create();
                 dialogShow.show();
+            }
+        });
+
+        Button statisticsButton = (Button) findViewById(R.id.maintenance_statistics_button);
+        statisticsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent displayStatistics = new Intent(VehicleMaintenance.this, StatisticsPieChart.class);
+                displayStatistics.putExtra("maintenance values needed for pie chart", vehicleMaintenanceList);
+                startActivity(displayStatistics);
             }
         });
     }

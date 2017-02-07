@@ -10,8 +10,12 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,7 +61,7 @@ public class ImportExportActivity extends AppCompatActivity {
                     //Toast.makeText(ImportExportActivity.this, "stuffs3", Toast.LENGTH_LONG).show();
                     byte[] writeBuffer = (byte[]) msg.obj;
                     String writeMessage = new String(writeBuffer);
-                    testView.setText("Message sent!");
+                    testView.setText("Vehicle sent!");
                     break;
                 case MESSAGE_READ:
                     //Toast.makeText(ImportExportActivity.this, "stuffs2", Toast.LENGTH_LONG).show();
@@ -131,18 +136,51 @@ public class ImportExportActivity extends AppCompatActivity {
             }
         });
 
-        final EditText testView2 = (EditText) findViewById(R.id.testView2);
+        final EditText transferEditText = (EditText) findViewById(R.id.transfer_list_view);
 
         Button test2 = (Button) findViewById(R.id.send_button);
         test2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = testView2.getText().toString();
-                //byte[] send = message.getBytes();
-                Vehicle veh = Vehicle.findById(Vehicle.class, 1L);
-                History his = History.findById(History.class, 1L);
-                Oil oil = Oil.findById(Oil.class, 1L);
-                List<Maintenance> maintenance = Maintenance.find(Maintenance.class, "vehicle_id = ?", "1");
+
+                boolean withHistory = false;
+                boolean withOil = false;
+                boolean withMaintenance = false;
+
+                int idItemAtPosition = Integer.valueOf(transferEditText.getText().toString());
+
+                Vehicle veh = Vehicle.findById(Vehicle.class, Long.valueOf(idItemAtPosition));
+
+                CheckBox historyCheckBox = (CheckBox) findViewById(R.id.history_checkbox);
+                if (historyCheckBox.isChecked()) {
+                    withHistory = true;
+                }
+
+                CheckBox oilCheckBox = (CheckBox) findViewById(R.id.oil_checkbox);
+                if (oilCheckBox.isChecked()) {
+                    withOil = true;
+                }
+
+                CheckBox maintenanceCheckBox = (CheckBox) findViewById(R.id.maintenance_checkbox);
+                if (maintenanceCheckBox.isChecked()) {
+                    withMaintenance = true;
+                }
+
+                History his = new History("", 0, 0, 0);
+                if (withHistory) {
+                    his = History.findById(History.class, Long.valueOf(idItemAtPosition));
+                }
+
+                Oil oil = new Oil(0, 8000);
+                if (withOil) {
+                    oil = Oil.findById(Oil.class, Long.valueOf(idItemAtPosition));
+                }
+
+                List<Maintenance> maintenance = new ArrayList<Maintenance>();
+                if (withMaintenance) {
+                    maintenance = Maintenance.find(Maintenance.class, "vehicle_id = ?", String.valueOf(idItemAtPosition));
+                }
+
                 WholeVehicle vehicle = new WholeVehicle(veh, his, oil, maintenance);
 
                 byte[] send = new byte[0];

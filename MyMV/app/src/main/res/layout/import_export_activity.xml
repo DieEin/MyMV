@@ -15,17 +15,41 @@
         android:id="@+id/testView"
         android:layout_below="@+id/send_button"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_and_connect_button"
-        android:id="@+id/testView2"/>
-
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/send_button"
-        android:layout_below="@+id/testView2"
+        android:layout_below="@+id/search_and_connect_button"
         android:text="send"/>
+
+    <EditText
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/transfer_list_view"
+        android:layout_below="@id/send_button"
+        android:inputType="number"></EditText>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/history_checkbox"
+        android:text="@string/history_table_name"
+        android:layout_below="@+id/transfer_list_view" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/oil_checkbox"
+        android:text="@string/oil_table_name"
+        android:layout_below="@+id/transfer_list_view"
+        android:layout_toRightOf="@id/history_checkbox"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/maintenance_checkbox"
+        android:text="@string/maintenance_table_name"
+        android:layout_below="@+id/transfer_list_view"
+        android:layout_toRightOf="@+id/oil_checkbox"/>
 
 </RelativeLayout>

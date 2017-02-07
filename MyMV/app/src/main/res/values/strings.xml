@@ -18,4 +18,7 @@
     <string name="manage_vehicle_maintenance">Maintenance</string>
     <string name="maintenance_statistics_button">Statistics</string>
     <string name="maintenance_add_button">Add</string>
+    <string name="history_table_name">History</string>
+    <string name="oil_table_name">Oil</string>
+    <string name="maintenance_table_name">Maintenance</string>
 </resources>

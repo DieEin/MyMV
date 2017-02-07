@@ -150,7 +150,7 @@ public class VehicleMaintenance extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent displayStatistics = new Intent(VehicleMaintenance.this, StatisticsPieChart.class);
-                displayStatistics.putExtra("maintenance values needed for pie chart", vehicleMaintenanceList);
+                displayStatistics.putExtra(PASSED_VARIABLE_NAME, idItemAtPosition);
                 startActivity(displayStatistics);
             }
         });

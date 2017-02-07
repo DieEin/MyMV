@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -28,26 +29,60 @@ public class StatisticsPieChart extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // the variable needed in this activity - the vehicle's id
+        final String PASSED_VARIABLE_NAME = "idItemAtPosition";
+        // default value if it wasn't passed
+        final int DEFAULT_PASSED_INT_VALUE = 0;
+
         Intent receivedIntent = getIntent();
-        String[] values = receivedIntent.getExtras().getStringArray("maintenance values needed for pie chart");
+        final int idItemAtPosition = receivedIntent.getIntExtra(PASSED_VARIABLE_NAME, DEFAULT_PASSED_INT_VALUE);
+
+        final List<Maintenance> maintenanceList = Maintenance.find(Maintenance.class, "vehicle_id = ?", String.valueOf(idItemAtPosition));
+
+        int gasSum = 0;
+        int fluidsSum = 0;
+        int tyresSum = 0;
+        int otherSum = 0;
+        for (Maintenance m : maintenanceList) {
+            switch (m.getType()) {
+                case "Gas":
+                    gasSum += m.getPrice();
+                    break;
+                case "Fluids":
+                    fluidsSum += m.getPrice();
+                    break;
+                case "Tyres":
+                    tyresSum += m.getPrice();
+                    break;
+                case "Other":
+                    otherSum += m.getPrice();
+                    break;
+            }
+        }
 
         mChart = new PieChart(this);
         mChart.setUsePercentValues(true);
         setContentView(mChart);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
-        for(int i = 0; i < values.length; i++) {
-            String entryValueText = values[i].split(Pattern.quote(": $"))[0];
-            values[i] = values[i].replaceAll("\\D+", "");
-            int entryValue = Integer.valueOf(values[i]);
 
-            entries.add(new PieEntry(entryValue, entryValueText));
+        if (gasSum != 0) {
+            entries.add(new PieEntry(gasSum, "Gas"));
         }
-        /*entries.add(new PieEntry(60, "stuff"));
-        entries.add(new PieEntry(80, "stuff2"));
-        entries.add(new PieEntry(20, "stuff3"));*/
 
-        PieDataSet dataSet = new PieDataSet(entries, "testing");
+        if (fluidsSum != 0) {
+            entries.add(new PieEntry(fluidsSum, "Fluids"));
+        }
+
+        if (tyresSum != 0) {
+            entries.add(new PieEntry(tyresSum, "Tyres"));
+        }
+
+        if (otherSum != 0) {
+            entries.add(new PieEntry(otherSum, "Other"));
+        }
+
+        PieDataSet dataSet = new PieDataSet(entries, "type");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         PieData data = new PieData(dataSet);

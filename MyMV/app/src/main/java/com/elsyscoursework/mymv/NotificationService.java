@@ -49,7 +49,9 @@ public class NotificationService extends Service {
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, startNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, pendingIntent);
+                // 24 hours : 60000 is  1 minute multiplied by 60 for 60 minutes (one hour), multiplied by 24 for 24 hours
+                int interval = 24 * 60 * 60000;
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
             } else {
                 Intent stopNotificationIntent = new Intent(this, NotificationReceiver.class);
                 PendingIntent sender = PendingIntent.getBroadcast(this, requestCode, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -66,49 +68,9 @@ public class NotificationService extends Service {
         return START_STICKY;
     }
 
+    // we don't need this so just return null
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        //throw new UnsupportedOperationException("Not yet implemented");
         return null;
-    }
-
-    private void handleNotification() {
-        boolean called = false;
-
-//        while(true) {
-//            HashMap<String, String> vehicleOil = db.getVehicleOilFromId(1);
-//            String nextChangeAt = vehicleOil.get("next_change_at");
-//            int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
-//
-//            if (called) {
-//                if (nextChangeAtAsInteger > 100) {
-//                    Intent stopNotificationIntent = new Intent(this, NotificationReceiver.class);
-//                    PendingIntent sender = PendingIntent.getBroadcast(this, 100, stopNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//
-//                    alarmManager.cancel(sender);
-//
-//                    called = false;
-//                } else {
-//                    continue;
-//                }
-//            } else {
-//                if (nextChangeAtAsInteger <= 100) {
-//
-//                    Calendar calendar = Calendar.getInstance();
-//
-//                    Intent startNotificationIntent = new Intent(this, NotificationReceiver.class);
-//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 100, startNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, pendingIntent);
-//
-//                    called = true;
-//                } else {
-//                    continue;
-//                }
-//            }
-//        }
     }
 }

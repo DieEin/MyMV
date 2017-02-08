@@ -42,7 +42,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.round_button)
                 .setContentTitle(oilIdAsString)
-                .setContentText("Notification text")
+                .setContentText("Oil needs changing")
                 .setSound(alarmSound)
                 .setAutoCancel(true);
 

@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 Object itemAtPosition = vehicleListView.getItemAtPosition(position);
                 // represent it as string
                 String itemAtPositionAsString = itemAtPosition.toString();
+                itemAtPositionAsString = itemAtPositionAsString.split("\\.")[0];
                 // remove all non digit characters
                 String idItemAtPositionAsString = itemAtPositionAsString.replaceAll("\\D+","");
                 // represent it as integer
@@ -122,15 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(importExportIntent);
             }
         });
-
-
-
-
-
-
-
-
-
 
         // add_new button and what happens when it gets clicked
         Button add_vehicle_button = (Button) findViewById(R.id.add_vehicle_button);

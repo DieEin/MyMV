@@ -106,7 +106,6 @@ public class ImportExportActivity extends AppCompatActivity {
 
                     break;
                 case MESSAGE_DEVICE_NAME:
-                    // save the connected device's name
                     String mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
                     Toast.makeText(getApplicationContext(), "Connected to "
                             + mConnectedDeviceName, Toast.LENGTH_SHORT).show();

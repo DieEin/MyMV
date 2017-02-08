@@ -5,12 +5,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -82,16 +87,37 @@ public class StatisticsPieChart extends AppCompatActivity {
             entries.add(new PieEntry(otherSum, "Other"));
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "type");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         PieData data = new PieData(dataSet);
         mChart.setData(data);
         mChart.setTransparentCircleColor(Color.WHITE);
         Description chartDescription = new Description();
-        chartDescription.setText("does it work?");
+        chartDescription.setText("");
         chartDescription.setTextSize(20);
         mChart.setDescription(chartDescription);
         mChart.getLegend().setTextSize(15);
+        mChart.animateY(2500);
+
+        Legend l = mChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+
+        mChart.setCenterText("%");
+        mChart.setCenterTextSize(30);
+        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                String value = "Exact value = $" + String.valueOf(e.getY());
+                Toast.makeText(StatisticsPieChart.this, value, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 }

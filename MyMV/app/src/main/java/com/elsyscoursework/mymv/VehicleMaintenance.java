@@ -168,13 +168,14 @@ public class VehicleMaintenance extends AppCompatActivity {
                         newMaintenance.save();
 
                         if (setType.getSelectedItem().toString().equals("Gas")) {
+                            dialog.dismiss();
 
                             AlertDialog.Builder innerDialog;
                             final int TEXT_SIZE = 20;
 
                             // layout to fill the dialog
-                            LinearLayout layout = new LinearLayout(VehicleMaintenance.this);
-                            layout.setOrientation(LinearLayout.VERTICAL);
+                            LinearLayout innerLayout = new LinearLayout(VehicleMaintenance.this);
+                            innerLayout.setOrientation(LinearLayout.VERTICAL);
 
                             // the dialog
                             innerDialog = new AlertDialog.Builder(VehicleMaintenance.this);
@@ -189,9 +190,9 @@ public class VehicleMaintenance extends AppCompatActivity {
                             setDialogEditText.setText(textToSet3);
                             setDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-                            layout.addView(setDialogText);
-                            layout.addView(setDialogEditText);
-                            innerDialog.setView(layout);
+                            innerLayout.addView(setDialogText);
+                            innerLayout.addView(setDialogEditText);
+                            innerDialog.setView(innerLayout);
 
                             innerDialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                                 @Override
@@ -211,9 +212,11 @@ public class VehicleMaintenance extends AppCompatActivity {
                                     if (keyCode == KeyEvent.KEYCODE_BACK) {
                                         finish();
                                         startActivity(getIntent());
+
+                                        return true;
                                     }
 
-                                    return true;
+                                    return false;
                                 }
                             });
 

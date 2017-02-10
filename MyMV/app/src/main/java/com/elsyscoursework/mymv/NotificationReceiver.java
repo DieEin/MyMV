@@ -38,7 +38,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        String notificationTitle = Vehicle.findById(Vehicle.class, oilIdAsLong).getManufacturer() + Vehicle.findById(Vehicle.class, oilIdAsLong).getModel();
+        String notificationTitle = Vehicle.findById(Vehicle.class, oilIdAsLong).getManufacturer() + " " + Vehicle.findById(Vehicle.class, oilIdAsLong).getModel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)

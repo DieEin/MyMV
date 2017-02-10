@@ -1,19 +1,27 @@
 package com.elsyscoursework.mymv;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.text.InputType;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -32,6 +40,15 @@ public class VehicleMaintenance extends AppCompatActivity {
     private AlertDialog.Builder dialog;
     private final int TEXT_SIZE = 20;
     private final int EDIT_TEXT_WIDTH = 80;
+
+    public static String SPECIFIC_VALUE_NAME = "specific value name";
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -150,8 +167,62 @@ public class VehicleMaintenance extends AppCompatActivity {
 
                         newMaintenance.save();
 
-                        finish();
-                        startActivity(getIntent());
+                        if (setType.getSelectedItem().toString().equals("Gas")) {
+
+                            AlertDialog.Builder innerDialog;
+                            final int TEXT_SIZE = 20;
+
+                            // layout to fill the dialog
+                            LinearLayout layout = new LinearLayout(VehicleMaintenance.this);
+                            layout.setOrientation(LinearLayout.VERTICAL);
+
+                            // the dialog
+                            innerDialog = new AlertDialog.Builder(VehicleMaintenance.this);
+
+                            TextView setDialogText = new TextView(VehicleMaintenance.this);
+                            final EditText setDialogEditText = new EditText(VehicleMaintenance.this);
+
+                            setDialogText.setText("Kilometerage:");
+                            setDialogText.setTextSize(TEXT_SIZE);
+
+                            String textToSet3 = String.valueOf((History.findById(History.class, Long.valueOf(idItemAtPosition))).getKilometerage());
+                            setDialogEditText.setText(textToSet3);
+                            setDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                            layout.addView(setDialogText);
+                            layout.addView(setDialogEditText);
+                            innerDialog.setView(layout);
+
+                            innerDialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    History history  = History.findById(History.class, Long.valueOf(idItemAtPosition));
+                                    history.setKilometerage(Integer.valueOf(setDialogEditText.getText().toString()));
+                                    history.save();
+
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            });
+
+                            innerDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                                @Override
+                                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+
+                                    return true;
+                                }
+                            });
+
+                            AlertDialog kilometerageDialogShow = innerDialog.create();
+                            kilometerageDialogShow.show();
+                        } else {
+                            finish();
+                            startActivity(getIntent());
+                        }
 
                     }
                 });
@@ -168,6 +239,28 @@ public class VehicleMaintenance extends AppCompatActivity {
                 Intent displayStatistics = new Intent(VehicleMaintenance.this, StatisticsPieChart.class);
                 displayStatistics.putExtra(PASSED_VARIABLE_NAME, idItemAtPosition);
                 startActivity(displayStatistics);
+            }
+        });
+
+        ImageButton popupMenuButton = (ImageButton) findViewById(R.id.popup_menu_button);
+        popupMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(VehicleMaintenance.this, v);
+                MenuInflater inflater = popup.getMenuInflater();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent goToSpecificMaintenance = new Intent(VehicleMaintenance.this, SpecificMaintenance.class);
+                        goToSpecificMaintenance.putExtra(PASSED_VARIABLE_NAME, idItemAtPosition);
+                        goToSpecificMaintenance.putExtra(SPECIFIC_VALUE_NAME, item.toString());
+                        startActivity(goToSpecificMaintenance);
+
+                        return true;
+                    }
+                });
+                inflater.inflate(R.menu.maintenance_popup_menu, popup.getMenu());
+                popup.show();
             }
         });
     }

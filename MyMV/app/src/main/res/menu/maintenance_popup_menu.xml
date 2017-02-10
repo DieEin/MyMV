@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/maintenance_gas_option"
+        android:title="Gas"/>
+    <item android:id="@+id/maintenance_fluids_option"
+        android:title="Fluids"/>
+    <item android:id="@+id/maintenance_tyres_option"
+        android:title="Tyres"/>
+    <item android:id="@+id/maintenance_other_option"
+        android:title="Other"/>
+</menu>

@@ -52,23 +52,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    public static byte[] serialize(Object obj) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ObjectOutputStream os = null;
-        try {
-            os = new ObjectOutputStream(out);
-            os.writeObject(obj);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return out.toByteArray();
-    }
-    public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream in = new ByteArrayInputStream(data);
-        ObjectInputStream is = new ObjectInputStream(in);
-        return is.readObject();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

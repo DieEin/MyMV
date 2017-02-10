@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/drawer_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:textSize="@dimen/maintenance_buttons_sizes"
             android:textColor="@android:color/white"
             android:textAllCaps="false"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.45"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -30,12 +31,20 @@
             android:textSize="@dimen/maintenance_buttons_sizes"
             android:textColor="@android:color/white"
             android:textAllCaps="false"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.45"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/popup_menu_button"
+            android:background="#3b4148"
+            android:layout_weight="0.1"
+            android:id="@+id/popup_menu_button"/>
 
     </LinearLayout>
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/maintenance_list_view"></ListView>
 

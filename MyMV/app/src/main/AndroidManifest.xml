@@ -34,6 +34,7 @@
         <activity android:name=".ListDevicesActivity"
             android:label="Bluetooth devices"
             android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity android:name=".SpecificMaintenance"/>
 
         <receiver android:name=".NotificationReceiver" />
 

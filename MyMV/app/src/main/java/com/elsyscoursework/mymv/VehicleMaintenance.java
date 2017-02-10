@@ -79,6 +79,9 @@ public class VehicleMaintenance extends AppCompatActivity {
                 LinearLayout priceLayout = new LinearLayout(VehicleMaintenance.this);
                 typeLayout.setOrientation(LinearLayout.HORIZONTAL);
 
+                LinearLayout nameLayout = new LinearLayout(VehicleMaintenance.this);
+                nameLayout.setOrientation(LinearLayout.HORIZONTAL);
+
                 // the dialog
                 dialog = new AlertDialog.Builder(VehicleMaintenance.this);
 
@@ -124,12 +127,25 @@ public class VehicleMaintenance extends AppCompatActivity {
 
                 layout.addView(priceLayout);
 
+                TextView nameTextView = new TextView(VehicleMaintenance.this);
+                nameTextView.setText("Name:");
+                nameTextView.setTextSize(TEXT_SIZE);
+
+                final EditText setName = new EditText(VehicleMaintenance.this);
+                setName.setTextSize(TEXT_SIZE);
+                setName.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, android.app.ActionBar.LayoutParams.WRAP_CONTENT));
+
+                nameLayout.addView(nameTextView);
+                nameLayout.addView(setName);
+
+                layout.addView(nameLayout);
+
                 dialog.setView(layout);
 
                 dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Maintenance newMaintenance = new Maintenance(setType.getSelectedItem().toString(), setDate.getText().toString(),
+                        Maintenance newMaintenance = new Maintenance(setType.getSelectedItem().toString(), setName.getText().toString(), setDate.getText().toString(),
                                 Integer.valueOf(setPrice.getText().toString()), idItemAtPosition);
 
                         newMaintenance.save();

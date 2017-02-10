@@ -159,6 +159,27 @@ public class ManageVehicleOnClickListener implements View.OnClickListener {
 
                 layout.addView(setDialogText);
                 layout.addView(setDialogEditText);
+
+                TextView dateText = new TextView(context);
+                dateText.setText("Date:");
+                dateText.setTextSize(TEXT_SIZE);
+
+                final EditText setDate = new EditText(context);
+                setDate.setInputType(InputType.TYPE_CLASS_DATETIME);
+
+                layout.addView(dateText);
+                layout.addView(setDate);
+
+                TextView priceText = new TextView(context);
+                priceText.setText("Price:");
+                priceText.setTextSize(TEXT_SIZE);
+
+                final EditText setPrice = new EditText(context);
+                setPrice.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                layout.addView(priceText);
+                layout.addView(setPrice);
+
                 dialog.setView(layout);
 
                 dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
@@ -168,6 +189,9 @@ public class ManageVehicleOnClickListener implements View.OnClickListener {
                         Oil oil = getOilById(idItemAtPosition);
                         oil.setChangedAt(Integer.valueOf(setDialogEditText.getText().toString()));
                         oil.save();
+
+                        Maintenance newMaintenance = new Maintenance("Fluids", "Oil", setDate.getText().toString(), Integer.valueOf(setPrice.getText().toString()), idItemAtPosition);
+                        newMaintenance.save();
 
                         ((Activity) context).finish();
                         context.startActivity(((Activity) context).getIntent());

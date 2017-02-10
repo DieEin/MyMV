@@ -11,12 +11,14 @@ import java.io.Serializable;
 public class Maintenance extends SugarRecord implements Serializable {
 
     private String type;
+    private String name;
     private String date;
     private int price;
     private int vehicleId;
 
-    public Maintenance(String type, String date, int price, int vehicleId) {
+    public Maintenance(String type, String name, String date, int price, int vehicleId) {
         this.type = type;
+        this.name = name;
         this.date = date;
         this.price = price;
         this.vehicleId = vehicleId;
@@ -28,6 +30,14 @@ public class Maintenance extends SugarRecord implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setType(String type) {

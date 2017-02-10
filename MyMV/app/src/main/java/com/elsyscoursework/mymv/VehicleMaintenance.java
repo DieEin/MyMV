@@ -74,9 +74,11 @@ public class VehicleMaintenance extends AppCompatActivity {
             counter++;
         }
 
-        ListAdapter maintenanceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, vehicleMaintenanceList);
+        /*ListAdapter maintenanceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, vehicleMaintenanceList);
         final ListView maintenanceListView = (ListView) findViewById(R.id.maintenance_list_view);
-        maintenanceListView.setAdapter(maintenanceAdapter);
+        maintenanceListView.setAdapter(maintenanceAdapter);*/
+        final ListView maintenanceListView = (ListView) findViewById(R.id.maintenance_list_view);
+        maintenanceListView.setAdapter(new VehicleMaintenanceArrayAdapter(this, vehicleMaintenanceList));
 
         Button addButton = (Button) findViewById(R.id.maintenance_add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +202,28 @@ public class VehicleMaintenance extends AppCompatActivity {
                                     History history  = History.findById(History.class, Long.valueOf(idItemAtPosition));
                                     history.setKilometerage(Integer.valueOf(setDialogEditText.getText().toString()));
                                     history.save();
+
+                                    History vehicleHistory = History.findById(History.class, Long.valueOf(idItemAtPosition));
+                                    String kilometerage = Integer.toString(vehicleHistory.getKilometerage());
+
+                                    Oil vehicleOil = Oil.findById(Oil.class, Long.valueOf(idItemAtPosition));
+                                    String changedAt = Integer.toString(vehicleOil.getChangedAt());
+                                    String nextChangeAt = Integer.toString(vehicleOil.getNextChangeAt());
+
+                                    int kilometerageAsInteger = Integer.parseInt(kilometerage);
+                                    int changedAtAsInteger = Integer.parseInt(changedAt);
+                                    int nextChangeAtAsInteger = Integer.parseInt(nextChangeAt);
+
+                                    int distanceWithoutOilChange = kilometerageAsInteger - changedAtAsInteger;
+                                    int nextOilChangeAtAsInteger = 8000 - distanceWithoutOilChange;
+                                    nextChangeAt = String.valueOf(nextOilChangeAtAsInteger);
+
+                                    if (nextChangeAtAsInteger != nextOilChangeAtAsInteger) {
+                                        vehicleOil.setNextChangeAt(nextOilChangeAtAsInteger);
+                                        vehicleOil.save();
+
+                                        startService(new Intent(VehicleMaintenance.this, NotificationService.class));
+                                    }
 
                                     finish();
                                     startActivity(getIntent());

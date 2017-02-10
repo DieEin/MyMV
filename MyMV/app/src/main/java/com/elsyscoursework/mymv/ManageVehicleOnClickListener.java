@@ -156,6 +156,7 @@ public class ManageVehicleOnClickListener implements View.OnClickListener {
 
                 String textToSet4 = String.valueOf(getOilById(idItemAtPosition).getChangedAt());
                 setDialogEditText.setText(textToSet4);
+                setDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                 layout.addView(setDialogText);
                 layout.addView(setDialogEditText);

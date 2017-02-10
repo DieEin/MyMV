@@ -38,10 +38,12 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+        String notificationTitle = Vehicle.findById(Vehicle.class, oilIdAsLong).getManufacturer() + Vehicle.findById(Vehicle.class, oilIdAsLong).getModel();
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.round_button)
-                .setContentTitle(oilIdAsString)
+                .setSmallIcon(R.drawable.oil_change_icon)
+                .setContentTitle(notificationTitle)
                 .setContentText("Oil needs changing")
                 .setSound(alarmSound)
                 .setAutoCancel(true);

@@ -7,4 +7,6 @@
     <dimen name="update_views_height_dimensions">35dp</dimen>
     <dimen name="manage_vehicle_text_size">20sp</dimen>
     <dimen name="maintenance_buttons_sizes">15sp</dimen>
+    <dimen name="device_name_size">18sp</dimen>
+    <dimen name="device_name_padding">5dp</dimen>
 </resources>

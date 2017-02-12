@@ -74,9 +74,6 @@ public class VehicleMaintenance extends AppCompatActivity {
             counter++;
         }
 
-        /*ListAdapter maintenanceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, vehicleMaintenanceList);
-        final ListView maintenanceListView = (ListView) findViewById(R.id.maintenance_list_view);
-        maintenanceListView.setAdapter(maintenanceAdapter);*/
         final ListView maintenanceListView = (ListView) findViewById(R.id.maintenance_list_view);
         maintenanceListView.setAdapter(new VehicleMaintenanceArrayAdapter(this, vehicleMaintenanceList));
 
